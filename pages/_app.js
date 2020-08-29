@@ -1,7 +1,11 @@
+import Header from '../components/Header';
 import '../styles/styles.css';
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
-}
+const App = ({ Component, pageProps }) => (
+  <>
+    <Header />
+    <Component {...pageProps} />
+  </>
+);
 
-export default MyApp
+export default App;
