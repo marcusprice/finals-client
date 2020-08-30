@@ -3,7 +3,6 @@
     background-size: cover;
     background-position: center center;
     border-bottom: 6px ridge #bbb;
-    margin-bottom: 128px;
 }
 
 .header {
@@ -104,7 +103,7 @@
 @media (min-width: 800px) {
     .logo {
         width: 512px;
-        margin-left: 256px
+        margin-left: 128px
     }
 
     .nav {

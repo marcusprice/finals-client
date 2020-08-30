@@ -1,0 +1,62 @@
+.container {
+    width: 100%;
+}
+
+.rainbow {
+    background: linear-gradient(to right, #6666ff, #0099ff , #00ff00, #ff3399, #6666ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: rainbow_animation 6s ease-in-out infinite;
+    background-size: 400% 100%;
+}
+
+@keyframes rainbow_animation {
+    0%, 100% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 100% 0;
+    }
+}
+
+.postInfo {
+    display: block;
+    font-size: 16px;
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    margin-bottom: 4px;
+}
+
+.featuredImage {
+    display: block;
+    width: 100%;
+}
+
+@media (min-width: 640px) {
+    .postInfo {
+        font-size: 20px;
+        font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    }
+}
+
+@media (min-width: 800px) {
+    .container {
+        width: 90%;
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        width: 75%;
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 1280px) {
+    .container {
+        width: 50%;
+        margin: 0 auto;
+    }
+}

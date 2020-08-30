@@ -1,0 +1,25 @@
+.container {
+    width: 100%;
+    padding: 64px 8px;
+    background: url("/stars.gif");
+}
+
+@media (min-width: 640px) {
+    .container {
+        padding: 128px 32px;
+    }
+    
+}
+
+@media (min-width: 800px) {
+
+}
+
+@media (min-width: 1024px) {
+
+}
+
+@media (min-width: 1280px) {
+
+
+}

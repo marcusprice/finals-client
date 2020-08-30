@@ -22,7 +22,7 @@ const Header = () => (
             <nav className={styles.nav}>
                 <ul className={styles.navUl}>
                     <li className={styles.navItem + " hammer"}>
-                        <span className={styles.navTitle}>Finals Shop</span>
+                        <span className={styles.navTitle}>Shop</span>
                         <img className={styles.navGif}  src={tempShopGif} alt="palm trees gif" />
                     </li>
 
