@@ -7,7 +7,7 @@
 
 .header {
     width: 100%;
-    padding: 16px 0;
+    padding: 8px 0;
     background: rgb(0, 0, 0, .3);
 }
 
@@ -38,7 +38,7 @@
     padding-left: 100%;
     animation: marquee 15s linear infinite;
     font-family: "Times New Roman", Times, serif;
-    font-size: 30px;
+    font-size: 24px;
     color: #FFF;
     font-style: italic;
 }
@@ -102,7 +102,7 @@
 
 @media (min-width: 800px) {
     .logo {
-        width: 512px;
+        width: 448px;
         margin-left: 128px
     }
 
@@ -117,16 +117,27 @@
     }
 
     .navItem {
-        width: 256px;
+        width: 192px;
         margin: 0 32px;
     }
 }
 
 @media (min-width: 1024px) {
+    .header {
+        padding: 16px 0;
+    }
 
+    .marqueeText {
+        font-size: 36px;
+    }
 }
 
 @media (min-width: 1280px) {
+    .logo {
+        width: 512px;
+    }
 
-
+    .navItem {
+        width: 256px;
+    }
 }

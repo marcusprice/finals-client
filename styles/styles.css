@@ -11,6 +11,17 @@ html {
     box-sizing: inherit;
 }
 
+.featuredContent {
+    max-width: 1024px;
+    margin: 0 auto;
+}
+
+.featuredContentImg {
+    display: block;
+    margin: 16px auto;
+    width: 75%;
+}
+
 li {
     list-style-type: none;
 }
@@ -27,11 +38,54 @@ a {
 h2 {
     font-family: "Comic Sans MS", cursive, sans-serif;
     margin-bottom: 16px;
+    color: yellow;
 }
 
 h3 {
     font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
     margin-bottom: 8px;
+    color: yellow;
+}
+
+.postInfo, .readMore {
+    display: block;
+    font-size: 16px;
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    margin-bottom: 4px;
+    color: yellow;
+}
+
+p {
+    color: yellow;
+    font-size: 18px;
+}
+
+.rainbow {
+    background: linear-gradient(to right, #6666ff, #0099ff , #00ff00, #ff3399, #6666ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: rainbow_animation 6s ease-in-out infinite;
+    background-size: 400% 100%;
+}
+
+@keyframes rainbow_animation {
+    0%, 100% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 100% 0;
+    }
+}
+
+/* responsive styles */
+
+@media (min-width: 425px) {
+    .featuredContentImg {
+        margin: 32px auto;
+        width: 60%;
+    }
 }
 
 @media (min-width: 640px) {
@@ -42,12 +96,21 @@ h3 {
     h3 {
         font-size: 30px;
     }
+
+    .postInfo, .readMore {
+        font-size: 20px;
+    }
 }
 
 @media (min-width: 800px) {
     .container {
         width: 90%;
         margin: 0 auto;
+    }
+
+    .featuredContentImg {
+        margin: 64px auto;
+        width: 40%;
     }
 }
 

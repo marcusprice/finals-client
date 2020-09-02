@@ -1,11 +1,12 @@
-import Head from 'next/head';
 import ContentContainer from '../components/ContentContainer';
 import FeaturedPost from '../components/FeaturedPost';
+import BlogPosts from '../components/BlogPosts';
 
-export default function Home() {
-  return (
-    <ContentContainer>
-      <FeaturedPost />
-    </ContentContainer>
-  )
-}
+const Home = () => (
+  <ContentContainer>
+    <FeaturedPost />
+    <BlogPosts />
+  </ContentContainer>
+);
+
+export default Home;

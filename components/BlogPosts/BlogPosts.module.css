@@ -1,13 +1,23 @@
 .container {
-    width: 100%;
-    padding: 64px 16px;
-    background: url("/stars.gif");
+    max-width: 1024px;
+    margin: 0 auto;
+    margin-top: 64px;
 }
+
+.postsContainer {
+    columns: 2;
+}
+
+.blogPost {
+    padding: 16px 0;
+    width: 100%;
+}
+
 
 @media (min-width: 640px) {
     .container {
-        padding: 128px 32px;
-    }  
+        margin-top: 128px;
+    }
 }
 
 @media (min-width: 800px) {
@@ -19,6 +29,5 @@
 }
 
 @media (min-width: 1280px) {
-
 
 }
