@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import styles from './Header.module.css';
 import tempHero from '../../assets/img/hero-temp.png';
-import tempLogo from '../../assets/img/logo.png';
+import tempLogo from '../../assets/img/finals_clean.png';
 import tempShopGif from '../../assets/img/shop.gif';
 import tempAboutGif from '../../assets/img/about.gif';
 

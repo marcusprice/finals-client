@@ -11,7 +11,9 @@ const About = () => (
             <section className="featuredContent">
                 <h2>Finals</h2>
                 <h3>Rumored to be among the best</h3>
-                <img className="featuredContentImg" src={logo}/>
+                <div className="marqueeBounce">
+                    <img className="featuredContentImg marqueeBounceContent" src={logo}/>
+                </div>
                 <p>Finals…it took a long time to get here, and we took Ls in hell. But we stayed in the game and now we’re not handle-able.</p>
 
                 <p>We are bringing blogging back from 2009, with a website from 1999. We may also try and sell you a zine or a hoodie. </p>

@@ -11,12 +11,28 @@
 .blogPost {
     padding: 16px 0;
     width: 100%;
+    margin-bottom: 64px;
 }
 
+.postImage {
+    width: 100%;
+    display: block;
+    margin: 32px auto;
+}
 
 @media (min-width: 640px) {
     .container {
         margin-top: 128px;
+    }
+
+    .postImage {
+        width: 50%;
+        display: block;
+        margin: 32px auto;
+    }
+
+    .blogPost {
+        margin-bottom: 256px;
     }
 }
 
