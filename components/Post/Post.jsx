@@ -1,7 +1,11 @@
-const Post = () => (
+import ReactMarkdown from 'react-markdown';
+
+const Post = props => (
     <article>
-        <h3> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</h3>
-        <span className={styles.postInfo}>Posted by Spencer on 8/29/2020</span>
+        <h3>{props.title}</h3>
+        <span className="postInfo">Posted by {props.author} on {props.date}</span>
+        <ReactMarkdown source={props.postContent} />
+        <span className="readMore hammer">Read More</span>
     </article>
 );
 
