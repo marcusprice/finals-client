@@ -9,4 +9,4 @@ const Post = props => (
     </article>
 );
 
-export default Article;
+export default Post;

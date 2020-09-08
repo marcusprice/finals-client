@@ -11,10 +11,10 @@ const Home = props => (
 );
 
 export async function getStaticProps() {
-  const articles = await axios.get('http://locahost:1337/articles');
+  const articles = await axios.get(process.env.API_ROUTE + '/articles');
   return {
     props: {
-      posts: articles
+      posts: articles.data
     }
   }
 }
