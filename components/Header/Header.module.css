@@ -50,6 +50,7 @@
 
 .nav {
     width: 100%;
+    text-align: center;
 }
 
 .navUl {
@@ -103,17 +104,17 @@
 @media (min-width: 800px) {
     .logo {
         width: 448px;
-        margin-left: 128px
+        /* margin-left: 128px */
     }
 
-    .nav {
+    /* .nav {
         text-align: right;
-    }
+    } */
 
     .navUl {
         width: 100%;
         display: inline-block;
-        padding-right: 10%;
+        /* padding-right: 10%; */
     }
 
     .navItem {
