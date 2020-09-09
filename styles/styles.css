@@ -34,6 +34,30 @@ a {
     cursor: url(/hammer.png), pointer;
 }
 
+article * {
+    display: none;
+}
+
+article .postContent p, article h3, article span, .postContent {
+    display: block;
+}
+
+.postContent {
+    max-height: 64px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.expanded * {
+    display: block;
+}
+
+.expanded img, .expanded iframe {
+    display: block;
+    width: 50%;
+    margin: 0 auto;
+}
+
 /* typography */
 h2 {
     font-family: "Comic Sans MS", cursive, sans-serif;
@@ -43,7 +67,6 @@ h2 {
 }
 
 h3 {
-    /* font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif; */
     margin-bottom: 8px;
     font-size: 24px;
     color: yellow;
@@ -52,14 +75,21 @@ h3 {
 .postInfo, .readMore {
     display: block;
     font-size: 18px;
-    /* font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif; */
-    margin-bottom: 4px;
     color: yellow;
+}
+
+.postInfo {
+    margin-bottom: 4px;
+}
+
+.readMore {
+    margin-top: 8px;
+    font-weight: 700;
 }
 
 p {
     color: yellow;
-    font-size: 18px;
+    font-size: 18px;    
 }
 
 /* animations */
@@ -121,7 +151,7 @@ p {
     }
 
     .postInfo, .readMore {
-        font-size: 30px;
+        font-size: 24px;
     }
 }
 

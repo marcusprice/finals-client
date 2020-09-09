@@ -6,14 +6,19 @@ const BlogPosts = props => {
 
     const handleInitialPosts = () => {
         return props.posts.map(post => (
-            <Post title={post.title} author={post.created_by.firstname} postContent={post.content}/>
+            <Post 
+                title={post.title} 
+                author={post.created_by.firstname} 
+                postContent={post.content} 
+                date={post.date_posted} 
+                key={Math.floor(Math.random() * 50000)} />
         ))
     }
 
     return(
         <section className={styles.container}>
             <h2>Posts</h2>
-            {handleInitialPosts()}
+            { handleInitialPosts() }
         </section>
     );
 };
