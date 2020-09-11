@@ -11,7 +11,7 @@ const Home = props => (
 );
 
 export async function getStaticProps() {
-  const articles = await axios.get(process.env.API_ROUTE + '/articles');
+  const articles = await axios.get(process.env.API_ROUTE + '/articles?_sort=date_posted:DESC&_limit=5');
   return {
     props: {
       posts: articles.data

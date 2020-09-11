@@ -52,10 +52,15 @@ article .postContent p, article h3, article span, .postContent {
     display: block;
 }
 
-.expanded img, .expanded iframe {
+.expanded img {
     display: block;
-    width: 50%;
+    width: 80%;
     margin: 0 auto;
+}
+
+iframe {
+    margin: 0 auto;
+    max-width: 100%;
 }
 
 /* typography */
