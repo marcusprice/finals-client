@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import ReactMarkdown from 'react-markdown';
+import { useState, useRef } from 'react';
+import ReactMarkdown from 'react-markdown/with-html';
 import styles from './Post.module.css';
+import Comments from '../Comments';
 
 const handleDate = date => {
     //split the date
@@ -28,16 +29,37 @@ const nth = d => {
 }
 
 const Post = props => {
-    const [expanded, setExpanded] = useState(false);
+    const [expanded, setExpanded] = useState(false);    //state to manage whether the post is expanded or not
+    const postContent = useRef();                       //ref used to get copy of post container for bandcamp/iframe fix
+
+    const handleClick = () => {
+        //expands/un-expands post
+        setExpanded(!expanded);
+
+        //bandcamp has issues rendering in next.js and the following is a solution
+        //the following code will force a reload on all iframe sources after a user
+        //expands it
+        let iframes = postContent.current.getElementsByTagName("iframe");
+
+        //handle bandcamp glitch
+        for (let node of iframes) { 
+            node.src = node.src;
+        } 
+    }
 
     return(
         <article className={styles.article + ' ' + ((expanded) ? 'expanded' : '')}>
             <h3>{props.title}</h3>
             <span className="postInfo">Posted by {props.author} on {handleDate(props.date)}</span>
-            <div className={(expanded) ? 'postContentExpanded' : 'postContent'}>
-                <ReactMarkdown source={props.postContent} escapeHtml={false} transformImageUri={uri => process.env.NEXT_PUBLIC_API_ROUTE + uri}/>
+            <div ref={postContent} className={(expanded) ? 'postContentExpanded' : 'postContent'}>
+                <ReactMarkdown 
+                    source={props.postContent} 
+                    escapeHtml={false} 
+                    transformImageUri={uri => process.env.NEXT_PUBLIC_API_ROUTE + uri}
+                />
             </div>
-            <span className="readMore hammer" onClick={() => setExpanded(!expanded)}>{(expanded) ? 'Read Less' : 'Read More'}</span>
+            <Comments comments={props.comments} postID={props.postID}/>
+            <span className="readMore hammer" onClick={() => handleClick()}>{(expanded) ? 'Read Less' : 'Read More'}</span>
         </article>
     );
 }

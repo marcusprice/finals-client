@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Head from 'next/head';
 import Header from '../components/Header';
 import '../styles/styles.css';

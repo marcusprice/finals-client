@@ -1,0 +1,49 @@
+.container * {
+    display: block;
+}
+
+.container {
+    width: 100%;
+    border: outset 6px gray;
+    margin-top: 32px;
+    padding: 16px;
+}
+
+.commentContainer {
+    border: ridge 6px gray;
+    margin: 16px 0;
+    padding: 4px;
+}
+
+.commentText {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    margin: 8px 0;
+    font-size: 18px;
+    display: block;
+}
+
+.comic {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.textInput {
+    background-color: #111;
+    border: #6f0 solid 2px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 18px;
+}
+
+.commentBox {
+    background-color: #111;
+    border: #6f0 solid 2px;
+    width: 50%;
+    height: 128px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 18px;
+}
+
+
+.submit {
+    margin: 16px 0;
+    display: inline-block;
+}

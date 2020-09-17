@@ -20,6 +20,12 @@
     margin: 32px auto;
 }
 
+.loadingGif {
+    width: 25%;
+    display: block;
+    margin: 0 auto;
+}
+
 @media (min-width: 640px) {
     .container {
         margin-top: 128px;

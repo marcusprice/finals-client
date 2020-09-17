@@ -38,29 +38,21 @@ article * {
     display: none;
 }
 
-article .postContent p, article h3, article span, .postContent {
+article iframe, article h3, article p {
     display: block;
-}
-
-.postContent {
-    max-height: 64px;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .expanded * {
-    display: block;
+    display: inline-block;
 }
 
-.expanded img {
-    display: block;
-    width: 80%;
-    margin: 0 auto;
+.expanded p {
+    width: 100%;
 }
 
-iframe {
+.expanded img, .expanded iframe {
+    display: block;
     margin: 0 auto;
-    max-width: 100%;
 }
 
 /* typography */
@@ -99,7 +91,7 @@ p {
 
 /* animations */
 
-.rainbow {
+.rainbow, strong {
     background: linear-gradient(to right, #6666ff, #0099ff , #00ff00, #ff3399, #6666ff);
     -webkit-background-clip: text;
     background-clip: text;
