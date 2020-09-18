@@ -34,25 +34,23 @@ a {
     cursor: url(/hammer.png), pointer;
 }
 
-article * {
+.postContent {
+    max-height: 64px;
+    overflow: hidden;
+}
+
+.postContent *, .commentsHidden {
     display: none;
 }
 
-article iframe, article h3, article p {
+.postContent p {
     display: block;
 }
 
-.expanded * {
-    display: inline-block;
-}
-
-.expanded p {
-    width: 100%;
-}
-
-.expanded img, .expanded iframe {
+.postContentExpanded img, .postContentExpanded iframe {
     display: block;
     margin: 0 auto;
+    max-width: 100%;
 }
 
 /* typography */

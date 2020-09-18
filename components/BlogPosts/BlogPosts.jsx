@@ -42,17 +42,20 @@ const BlogPosts = props => {
 
     return(
         <section className={styles.container}>
+
             <h2>Posts</h2>
+
             <InfiniteScroll
                 dataLength={posts.length}
                 next={fetchMorePosts}
                 hasMore={hasMore}
                 loader={<img className={styles.loadingGif} src={loadingGif} alt="loading sign"/>}
-                endMessage={<img className={styles.loadingGif} src={end} alt="loading sign"/>} >
+                endMessage={<img className={styles.loadingGif} src={end} alt="more coming soon gif"/>} >
 
                 { posts }
 
             </InfiniteScroll>
+
         </section>
     );
 };

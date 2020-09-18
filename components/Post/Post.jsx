@@ -36,15 +36,16 @@ const Post = props => {
         //expands/un-expands post
         setExpanded(!expanded);
 
-        //bandcamp has issues rendering in next.js and the following is a solution
-        //the following code will force a reload on all iframe sources after a user
-        //expands it
+        //bandcamp has issues rendering album artwork in next.js and the following code is a solution.
+        //this trick is also a nice way to stop playing content when a user closes the post
+        
+        //get all iframes within the current post (via ref)
         let iframes = postContent.current.getElementsByTagName("iframe");
 
-        //handle bandcamp glitch
+        //loop through each iframe and reload the source
         for (let node of iframes) { 
             node.src = node.src;
-        } 
+        }
     }
 
     return(
@@ -58,7 +59,7 @@ const Post = props => {
                     transformImageUri={uri => process.env.NEXT_PUBLIC_API_ROUTE + uri}
                 />
             </div>
-            <Comments comments={props.comments} postID={props.postID}/>
+            <Comments comments={props.comments} postID={props.postID} expanded={expanded}/>
             <span className="readMore hammer" onClick={() => handleClick()}>{(expanded) ? 'Read Less' : 'Read More'}</span>
         </article>
     );

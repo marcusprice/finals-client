@@ -2,48 +2,85 @@
     display: block;
 }
 
+.title {
+    font-size: 30px;
+}
+
 .container {
     width: 100%;
     border: outset 6px gray;
     margin-top: 32px;
-    padding: 16px;
+    padding: 4px;
 }
 
 .commentContainer {
     border: ridge 6px gray;
     margin: 16px 0;
     padding: 4px;
+    display: block;
 }
 
 .commentText {
-    font-family: "Comic Sans MS", cursive, sans-serif;
-    margin: 8px 0;
-    font-size: 18px;
+    font-family: "Comic Sans MS", Verdana, sans-serif;
+    font-size: 14px;
     display: block;
 }
 
 .comic {
-    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-family: "Comic Sans MS", Verdana, sans-serif;
 }
 
 .textInput {
     background-color: #111;
     border: #6f0 solid 2px;
-    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-family: "Comic Sans MS", Verdana, sans-serif;
     font-size: 18px;
+    width: 100%;
+    margin-bottom: 16px;
 }
 
 .commentBox {
     background-color: #111;
     border: #6f0 solid 2px;
-    width: 50%;
     height: 128px;
-    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-family: "Comic Sans MS", Verdana, sans-serif;
     font-size: 18px;
+    width: 100%;
+    margin-bottom: 16px;
 }
 
 
 .submit {
     margin: 16px 0;
     display: inline-block;
+}
+
+@media (min-width: 640px) {
+    .container {
+        padding: 16px;
+    }
+
+    .commentContainer {
+        padding: 8px;
+    }
+
+    .textInput, .commentBox {
+        width: 50%;
+    }
+
+    .commentText {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 800px) {
+
+}
+
+@media (min-width: 1024px) {
+
+}
+
+@media (min-width: 1280px) {
+
 }
