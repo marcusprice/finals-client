@@ -1,47 +1,49 @@
 import Link from 'next/link';
 import styles from './Header.module.css';
-import tempHero from '../../assets/img/hero-temp.png';
-import tempLogo from '../../assets/img/finals_clean.png';
-import tempShopGif from '../../assets/img/shop.gif';
-import tempAboutGif from '../../assets/img/about.gif';
 
-const cmsStyles ={ 
-    backgroundImage: 'url("' + tempHero + '")'
-}
+const Header = props => {
+    const cmsStyles = { 
+        backgroundImage: 'url("' + process.env.NEXT_PUBLIC_API_ROUTE + props.heroImgURI + '")'
+    }
 
-const Header = () => (
-    <div className={styles.hero} style={cmsStyles}> 
-        <header className={styles.header}>
-            <div className={styles.siteTitleContainer}>
-                <Link href="/">
-                    <a>
-                        <h1><img className={styles.logo + ' hammer'} src={tempLogo} alt="finals logo" /></h1>
-                    </a>
-                </Link>
+    const headerStyles = {
+        background: 'rgb(0, 0, 0, ' + props.heroOpacity.toString() + ')'
+    }
 
-                <div className={styles.marquee}>
-                    <span className={styles.marqueeText}>Rumored to be among the best</span>
-                </div>
-            </div>
-
-            <nav className={styles.nav}>
-                <ul className={styles.navUl}>
-                    <li className={styles.navItem + " hammer"}>
-                        <span className={styles.navTitle}>Shop</span>
-                        <img className={styles.navGif}  src={tempShopGif} alt="palm trees gif" />
-                    </li>
-
-                    <Link href="/about">
-                        <li className={styles.navItem + " hammer"}>
-                                <span className={styles.navTitle}>About</span>
-                                <img className={styles.navGif} src={tempAboutGif} alt="city scape gif"/>
-            
-                        </li>
+    return (
+        <div className={styles.hero} style={cmsStyles}> 
+            <header className={styles.header} style={headerStyles}>
+                <div className={styles.siteTitleContainer}>
+                    <Link href="/">
+                        <a>
+                            <h1><img className={styles.logo + ' hammer'} src={process.env.NEXT_PUBLIC_API_ROUTE + props.heroLogo.url} alt={props.heroLogo.alternativeText} /></h1>
+                        </a>
                     </Link>
-                </ul>
-            </nav>
-        </header>
-    </div>
-);
+
+                    <div className={styles.marquee}>
+                        <span className={styles.marqueeText}>{props.tagline}</span>
+                    </div>
+                </div>
+
+                <nav className={styles.nav}>
+                    <ul className={styles.navUl}>
+                        <li className={styles.navItem + " hammer"}>
+                            <span className={styles.navTitle}>Shop</span>
+                            <img className={styles.navGif}  src={process.env.NEXT_PUBLIC_API_ROUTE + props.shopImg.url}  alt={props.shopImg.alternativeText} />
+                        </li>
+
+                        <Link href="/about">
+                            <li className={styles.navItem + " hammer"}>
+                                    <span className={styles.navTitle}>About</span>
+                                    <img className={styles.navGif} src={process.env.NEXT_PUBLIC_API_ROUTE + props.aboutImg.url} alt={props.aboutImg.alternativeText}/>
+                
+                            </li>
+                        </Link>
+                    </ul>
+                </nav>
+            </header>
+        </div>
+    )
+};
 
 export default Header;

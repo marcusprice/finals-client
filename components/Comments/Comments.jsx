@@ -13,7 +13,7 @@ const Comments = props => {
     const [recaptchaPassed, setRecaptchaPassed] = useState(false);
     const recaptchaRef = useRef();
 
-    const handleComments = () => {
+    const distributeComments = () => {
         if(comments?.length > 0) {
             return comments.map(comment => {
                 const commentDate = moment(comment.created_at).format('MMMM Do, YYYY @ h:mma');
@@ -33,7 +33,7 @@ const Comments = props => {
     const postComment = async e => {
         e.preventDefault();
 
-        if(name.length === 0 || commentText === 0) {
+        if(name.length === 0 || commentText.length === 0) {
             alert('Name and comment text cannot be blank...');
         } else {
             if(recaptchaPassed) {
@@ -58,7 +58,7 @@ const Comments = props => {
         <div className={styles.container + ((props.expanded) ? ' commentsExpanded' : ' commentsHidden')}>
             <h2 className={styles.title + ' rainbow'}>Comments</h2>
 
-            { handleComments() }
+            { distributeComments() }
 
             <h3 className={styles.comic + ' rainbow'}>Leave a Comment</h3>
             <form>

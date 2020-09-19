@@ -1,5 +1,7 @@
 import Head from 'next/head';
+import Header from '../components/Header';
 import ContentContainer from '../components/ContentContainer';
+import Footer from '../components/Footer';
 import logo from '../assets/img/FINALS_logo.jpg';
 
 const About = () => (
@@ -7,6 +9,7 @@ const About = () => (
         <Head>
             <title>Finals - About</title>
         </Head>
+        <Header />
         <ContentContainer>
             <section className="featuredContent">
                 <h2>Finals</h2>
@@ -21,6 +24,7 @@ const About = () => (
                 <p>Future contributors holler at <a className="hammer rainbow" href="mailto:finalsmag@gmail.com">finalsmag@gmail.com</a></p>
             </section>
         </ContentContainer>
+        <Footer />
     </>
 );
 

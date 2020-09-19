@@ -53,6 +53,15 @@ a {
     max-width: 100%;
 }
 
+.terms-of-use-container p, .terms-of-use-container a {
+    margin: 0; padding: 0;
+    color: yellow;
+}
+
+.terms-of-use-container a {
+    text-decoration: underline;
+}
+
 /* typography */
 h2 {
     font-family: "Comic Sans MS", cursive, sans-serif;
@@ -84,7 +93,8 @@ h3 {
 
 p {
     color: yellow;
-    font-size: 18px;    
+    font-size: 18px;
+    line-height: 1.5;
 }
 
 /* animations */
