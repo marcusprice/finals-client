@@ -4,7 +4,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import styles from './BlogPosts.module.css';
 import Post from '../Post';
 import loadingGif from '../../assets/img/loading.gif';
-import end from '../../assets/img/morecomesoon.gif';
+import end from '../../assets/img/morecomesoon.gif'; 
 
 const BlogPosts = props => {
 

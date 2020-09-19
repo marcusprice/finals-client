@@ -1,13 +1,19 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import moment from 'moment';
+import ReCAPTCHA from "react-google-recaptcha";
 import axios from 'axios';
 import styles from './Comments.module.css';
-import signGuestbook, { codePointAt } from '../../assets/img/sign-guestbook.gif';
+import signGuestbook from '../../assets/img/sign-guestbook.gif';
 
 const Comments = props => {
     const [comments, setComments] = useState(props.comments);
     const [name, setName] = useState('');
     const [commentText, setCommentText] = useState('');
+    const [recaptchaPassed, setRecaptchaPassed] = useState(false);
+
+    const recaptchaRef = useRef();
+
+    console.log(process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_KEY);
 
     const handleComments = () => {
         if(comments?.length > 0) {
@@ -28,10 +34,20 @@ const Comments = props => {
 
     const postComment = async e => {
         e.preventDefault();
-        const result = await axios.post(process.env.NEXT_PUBLIC_API_ROUTE + '/comments', {name: name, text: commentText, article: props.postID});
-        setComments([...comments, result.data]);
-        setName('');
-        setCommentText('');
+
+        if(name.length === 0 || commentText === 0) {
+            alert('Name and comment text cannot be blank...');
+        } else {
+            if(recaptchaPassed) {
+                const result = await axios.post(process.env.NEXT_PUBLIC_API_ROUTE + '/comments', {name: name, text: commentText, article: props.postID});
+                setComments([...comments, result.data]);
+                setName('');
+                setCommentText('');
+                recaptchaRef.current.reset();
+            } else {
+                alert('You need to confirm you are not a bot...');   
+            }
+        }
     }
 
     return(
@@ -50,6 +66,14 @@ const Comments = props => {
                 <label>
                     <span className={styles.commentText + ' rainbow'}>Comment</span>
                     <textarea value={commentText}  onChange={e => setCommentText(e.target.value)} className={styles.commentBox + ' rainbow'}></textarea>
+                </label>
+
+                <label>
+                    <ReCAPTCHA 
+                        ref={recaptchaRef}
+                        theme="dark"
+                        sitekey={process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_KEY}
+                        onChange={() => {setRecaptchaPassed(true)}} />
                 </label>
 
                 <label style={{display: 'inline-block'}}>

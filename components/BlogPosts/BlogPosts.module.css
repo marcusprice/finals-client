@@ -3,7 +3,7 @@
     margin: 0 auto;
     margin-top: 64px;
 }
-
+ 
 .postsContainer {
     columns: 2;
 }
@@ -39,6 +39,10 @@
 
     .blogPost {
         margin-bottom: 256px;
+    }
+
+    .loadingGif {
+        width: 25%;
     }
 }
 
