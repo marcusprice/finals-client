@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import moment from 'moment';
 import ReCAPTCHA from "react-google-recaptcha";
 import axios from 'axios';
@@ -9,11 +9,9 @@ const Comments = props => {
     const [comments, setComments] = useState(props.comments);
     const [name, setName] = useState('');
     const [commentText, setCommentText] = useState('');
+    const [recaptchaSize, setRecaptchaSize] = useState('normal');
     const [recaptchaPassed, setRecaptchaPassed] = useState(false);
-
     const recaptchaRef = useRef();
-
-    console.log(process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_KEY);
 
     const handleComments = () => {
         if(comments?.length > 0) {
@@ -50,6 +48,12 @@ const Comments = props => {
         }
     }
 
+    useEffect(() => {
+        if(window.innerWidth < 355) {
+            setRecaptchaSize('compact');
+        }
+    }, []);
+
     return(
         <div className={styles.container + ((props.expanded) ? ' commentsExpanded' : ' commentsHidden')}>
             <h2 className={styles.title + ' rainbow'}>Comments</h2>
@@ -73,7 +77,8 @@ const Comments = props => {
                         ref={recaptchaRef}
                         theme="dark"
                         sitekey={process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_KEY}
-                        onChange={() => {setRecaptchaPassed(true)}} />
+                        onChange={() => {setRecaptchaPassed(true)}} 
+                        size={recaptchaSize}/>
                 </label>
 
                 <label style={{display: 'inline-block'}}>

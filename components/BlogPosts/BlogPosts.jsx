@@ -11,7 +11,7 @@ const BlogPosts = props => {
     const [posts, setPosts] = useState(props.posts.map(post => (
         <Post 
             title={post.title} 
-            author={post.created_by.firstname} 
+            author={post.created_by} 
             postContent={post.content} 
             date={post.date_posted} 
             comments={post.comments}
@@ -29,7 +29,7 @@ const BlogPosts = props => {
                 setPosts(posts.concat(result.data.map(post => (
                     <Post 
                         title={post.title} 
-                        author={post.created_by.firstname} 
+                        author={post.created_by} 
                         postContent={post.content} 
                         date={post.date_posted} 
                         key={Math.floor(Math.random() * 50000)} />
