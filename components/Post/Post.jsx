@@ -18,7 +18,7 @@ const Post = props => {
         //this trick is also a nice way to stop playing content when a user closes the post
         
         //get all iframes within the current post (via ref)
-        let iframes = postContent.current.getElementsByTagName("iframe");
+        let iframes = postContent.current.getElementsByTagName('iframe');
 
         //loop through each iframe and reload the source
         for (let node of iframes) { 
@@ -39,7 +39,7 @@ const Post = props => {
                     transformImageUri={uri => process.env.NEXT_PUBLIC_API_ROUTE + uri}
                 />
             </div>
-            {(props.commentsOn) ? <Comments comments={props.comments} postID={props.postID} expanded={expanded}/> : ''}
+            {(props.commentsOn) ? <Comments postID={props.postID} expanded={expanded}/> : ''}
             <span className="readMore hammer" onClick={() => handleClick()}>{(expanded) ? 'Read Less' : 'Read More'}</span>
         </article>
     );

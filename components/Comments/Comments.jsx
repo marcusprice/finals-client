@@ -5,7 +5,7 @@ import axios from 'axios';
 import styles from './Comments.module.css';
 
 const Comments = props => {
-    const [comments, setComments] = useState(props.comments);
+    const [comments, setComments] = useState([]);
     const [name, setName] = useState('');
     const [commentText, setCommentText] = useState('');
     const [recaptchaSize, setRecaptchaSize] = useState('normal');
@@ -51,41 +51,58 @@ const Comments = props => {
         if(window.innerWidth < 355) {
             setRecaptchaSize('compact');
         }
-    }, []);
 
-    return(
-        <div className={styles.container + ((props.expanded) ? ' commentsExpanded' : ' commentsHidden')}>
-            <h2 className={styles.title + ' rainbow'}>Comments</h2>
+        const getComments = async () =>  {
+            const comments = await axios.get(process.env.NEXT_PUBLIC_API_ROUTE + '/comments?article=' + props.postID + '&_sort=created_at:ASC');
+            setComments(comments.data);
+        }
 
-            { distributeComments() }
+        if(props.expanded) {
+            getComments();
+        }
+    }, [props.expanded]);
 
-            <h3 className={styles.comic + ' rainbow'}>Leave a Comment</h3>
-            <form>
-                <label>                
-                    <span className={styles.commentText + ' rainbow'}>Name</span>
-                    <input value={name} onChange={e => setName(e.target.value)} className={styles.textInput + ' rainbow'} type="text"/>
-                </label>
+    const handleComments = () => {
+        if(props.expanded) {
+            return(
+                <div className={styles.container + ((props.expanded) ? ' commentsExpanded' : ' commentsHidden')}>
+                <h2 className={styles.title + ' rainbow'}>Comments</h2>
+    
+                { distributeComments() }
+    
+                <h3 className={styles.comic + ' rainbow'}>Leave a Comment</h3>
+                <form>
+                    <label>                
+                        <span className={styles.commentText + ' rainbow'}>Name</span>
+                        <input value={name} onChange={e => setName(e.target.value)} className={styles.textInput + ' rainbow'} type="text"/>
+                    </label>
+    
+                    <label>
+                        <span className={styles.commentText + ' rainbow'}>Comment</span>
+                        <textarea value={commentText}  onChange={e => setCommentText(e.target.value)} className={styles.commentBox + ' rainbow'}></textarea>
+                    </label>
+    
+                    <label>
+                        <ReCAPTCHA 
+                            ref={recaptchaRef}
+                            theme="dark"
+                            sitekey={process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_KEY}
+                            onChange={() => {setRecaptchaPassed(true)}} 
+                            size={recaptchaSize} />
+                    </label>
+    
+                    <label style={{display: 'inline-block'}}>
+                        <input onClick={e => postComment(e)} className={styles.submit + ' hammer'} type="image" src="/mailbox.gif" />
+                    </label>
+                </form>
+            </div>                
+            )
+        } else {
+            return '';
+        }
+    }
 
-                <label>
-                    <span className={styles.commentText + ' rainbow'}>Comment</span>
-                    <textarea value={commentText}  onChange={e => setCommentText(e.target.value)} className={styles.commentBox + ' rainbow'}></textarea>
-                </label>
-
-                <label>
-                    <ReCAPTCHA 
-                        ref={recaptchaRef}
-                        theme="dark"
-                        sitekey={process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_KEY}
-                        onChange={() => {setRecaptchaPassed(true)}} 
-                        size={recaptchaSize}/>
-                </label>
-
-                <label style={{display: 'inline-block'}}>
-                    <input onClick={e => postComment(e)} className={styles.submit + ' hammer'} type="image" src="/mailbox.gif" />
-                </label>
-            </form>
-        </div>
-    );
+    return handleComments();
 }
 
 export default Comments;

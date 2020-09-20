@@ -33,6 +33,7 @@ const BlogPosts = props => {
                         date={post.created_at}
                         comments={post.comments}
                         commentsOn={props.commentsOn}
+                        postID={post.id}
                         key={Math.floor(Math.random() * 50000)} />
                 ))));
             } else {

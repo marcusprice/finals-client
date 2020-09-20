@@ -7,8 +7,6 @@ import Footer from '../components/Footer';
 
 const Home = props => {
 
-  console.log(props.config);
-
   return (
     <>
       <Header 
