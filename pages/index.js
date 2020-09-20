@@ -7,6 +7,8 @@ import Footer from '../components/Footer';
 
 const Home = props => {
 
+  console.log(props.config);
+
   return (
     <>
       <Header 
@@ -18,8 +20,8 @@ const Home = props => {
         heroOpacity={props.config.hero_opacity} />
 
       <ContentContainer>
-        <FeaturedPost featuredArticle={props.featuredArticle} />
-        <BlogPosts posts={props.posts} />
+        <FeaturedPost commentsOn={props.config.comments} featuredArticle={props.featuredArticle} />
+        <BlogPosts commentsOn={props.config.comments} posts={props.posts} />
       </ContentContainer>
 
       <Footer termsOfUse={props.config.terms_of_use_text} />

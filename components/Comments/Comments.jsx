@@ -3,7 +3,6 @@ import moment from 'moment';
 import ReCAPTCHA from "react-google-recaptcha";
 import axios from 'axios';
 import styles from './Comments.module.css';
-import signGuestbook from '../../assets/img/sign-guestbook.gif';
 
 const Comments = props => {
     const [comments, setComments] = useState(props.comments);
@@ -82,7 +81,7 @@ const Comments = props => {
                 </label>
 
                 <label style={{display: 'inline-block'}}>
-                    <input onClick={e => postComment(e)} className={styles.submit + ' hammer'} type="image" src={signGuestbook} />
+                    <input onClick={e => postComment(e)} className={styles.submit + ' hammer'} type="image" src="/mailbox.gif" />
                 </label>
             </form>
         </div>

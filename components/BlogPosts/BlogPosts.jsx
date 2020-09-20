@@ -3,8 +3,6 @@ import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import styles from './BlogPosts.module.css';
 import Post from '../Post';
-import loadingGif from '../../assets/img/loading.gif';
-import end from '../../assets/img/morecomesoon.gif'; 
 
 const BlogPosts = props => {
 
@@ -15,6 +13,7 @@ const BlogPosts = props => {
             postContent={post.content} 
             date={post.created_at} 
             comments={post.comments}
+            commentsOn={props.commentsOn}
             postID={post.id}
             key={Math.floor(Math.random() * 50000)} />
     )));
@@ -31,13 +30,15 @@ const BlogPosts = props => {
                         title={post.title} 
                         author={post.created_by} 
                         postContent={post.content} 
-                        date={post.created_at} 
+                        date={post.created_at}
+                        comments={post.comments}
+                        commentsOn={props.commentsOn}
                         key={Math.floor(Math.random() * 50000)} />
                 ))));
             } else {
                 setHasMore(false);
             }
-        }, 2000)
+        }, Math.floor(Math.random() * 1000) + 1000);
     }
 
     return(
@@ -49,8 +50,8 @@ const BlogPosts = props => {
                 dataLength={posts.length}
                 next={fetchMorePosts}
                 hasMore={hasMore}
-                loader={<img className={styles.loadingGif} src={loadingGif} alt="loading sign"/>}
-                endMessage={<img className={styles.loadingGif} src={end} alt="more coming soon gif"/>} >
+                loader={<img className={styles.loadingGif} src="/loading.gif" alt="loading sign" />}
+                endMessage={<img className={styles.loadingGif} src="/endMessage.gif" alt="more coming soon gif" />} >
 
                 { posts }
 

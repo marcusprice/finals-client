@@ -39,7 +39,7 @@ const Post = props => {
                     transformImageUri={uri => process.env.NEXT_PUBLIC_API_ROUTE + uri}
                 />
             </div>
-            <Comments comments={props.comments} postID={props.postID} expanded={expanded}/>
+            {(props.commentsOn) ? <Comments comments={props.comments} postID={props.postID} expanded={expanded}/> : ''}
             <span className="readMore hammer" onClick={() => handleClick()}>{(expanded) ? 'Read Less' : 'Read More'}</span>
         </article>
     );
