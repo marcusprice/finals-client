@@ -13,7 +13,7 @@ const BlogPosts = props => {
             title={post.title} 
             author={post.created_by} 
             postContent={post.content} 
-            date={post.date_posted} 
+            date={post.created_at} 
             comments={post.comments}
             postID={post.id}
             key={Math.floor(Math.random() * 50000)} />
@@ -23,7 +23,7 @@ const BlogPosts = props => {
     
     const fetchMorePosts = () => {
         setTimeout(async () => {
-            const uri = process.env.NEXT_PUBLIC_API_ROUTE + '/articles?_sort=date_posted:DESC&_start=' + posts.length + '&_limit=5';
+            const uri = process.env.NEXT_PUBLIC_API_ROUTE + '/articles?_sort=created_at:DESC&_start=' + posts.length + '&_limit=5';
             const result = await axios.get(uri);
             if(result.data.length > 0) {
                 setPosts(posts.concat(result.data.map(post => (
@@ -31,7 +31,7 @@ const BlogPosts = props => {
                         title={post.title} 
                         author={post.created_by} 
                         postContent={post.content} 
-                        date={post.date_posted} 
+                        date={post.created_at} 
                         key={Math.floor(Math.random() * 50000)} />
                 ))));
             } else {

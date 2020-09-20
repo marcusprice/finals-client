@@ -1,31 +1,50 @@
+import axios from 'axios';
 import Head from 'next/head';
 import Header from '../components/Header';
 import ContentContainer from '../components/ContentContainer';
+import ReactMarkdown from 'react-markdown/with-html';
 import Footer from '../components/Footer';
 import logo from '../assets/img/FINALS_logo.jpg';
 
-const About = () => (
+const About = props => (
     <>
         <Head>
             <title>Finals - About</title>
         </Head>
-        <Header />
+        <Header 
+            heroImgURI={props.config.hero_image.url} 
+            heroLogo={props.config.hero_logo}
+            shopImg={props.config.shop_image}
+            aboutImg={props.config.about_image}
+            tagline={props.config.tagline} 
+            heroOpacity={props.config.hero_opacity} />
         <ContentContainer>
             <section className="featuredContent">
                 <h2>Finals</h2>
-                <h3>Rumored to be among the best</h3>
+                <h3>{props.config.tagline}</h3>
                 <div className="marqueeBounce">
                     <img className="featuredContentImg marqueeBounceContent" src={logo}/>
                 </div>
-                <p>Finals…it took a long time to get here, and we took Ls in hell. But we stayed in the game and now we’re not handle-able.</p>
-
-                <p>We are bringing blogging back from 2009, with a website from 1999. We may also try and sell you a zine or a hoodie. </p>
-
-                <p>Future contributors holler at <a className="hammer rainbow" href="mailto:finalsmag@gmail.com">finalsmag@gmail.com</a></p>
+                <div className="about-page-text">
+                    <ReactMarkdown source={props.aboutPage.about_text} />
+                </div>
             </section>
         </ContentContainer>
-        <Footer />
+        <Footer termsOfUse={props.config.terms_of_use_text} />
     </>
 );
+
+export async function getStaticProps() {
+
+    const config = await axios.get(process.env.API_ROUTE + '/config');
+    const aboutPage = await axios.get(process.env.API_ROUTE + '/about-page');
+  
+    return {
+      props: {
+        config: config.data,
+        aboutPage: aboutPage.data
+      }
+    }
+  }
 
 export default About;

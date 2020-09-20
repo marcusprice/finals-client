@@ -18,9 +18,10 @@ const Home = props => {
         heroOpacity={props.config.hero_opacity} />
 
       <ContentContainer>
-        <FeaturedPost />
+        <FeaturedPost featuredArticle={props.featuredArticle} />
         <BlogPosts posts={props.posts} />
       </ContentContainer>
+
       <Footer termsOfUse={props.config.terms_of_use_text} />
     </>
 )};
@@ -28,12 +29,14 @@ const Home = props => {
 export async function getStaticProps() {
 
   const config = await axios.get(process.env.API_ROUTE + '/config');
-  const articles = await axios.get(process.env.API_ROUTE + '/articles?_sort=date_posted:DESC&_limit=5');
+  const articles = await axios.get(process.env.API_ROUTE + '/articles?_sort=created_at:DESC&_limit=5');
+  const featuredArticle = await axios.get(process.env.API_ROUTE + '/featured-article');
 
   return {
     props: {
       config: config.data,
-      posts: articles.data
+      posts: articles.data,
+      featuredArticle: featuredArticle.data
     }
   }
 }

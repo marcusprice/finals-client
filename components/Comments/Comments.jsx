@@ -20,7 +20,7 @@ const Comments = props => {
 
                 return(
                     <div className={styles.commentContainer} key={Math.floor(Math.random() * 50000)}>
-                        <span className={styles.commentText + ' rainbow'}>Comment: {comment.text}</span>
+                        <span className={styles.commentText + ' rainbow'}>{comment.text}</span>
                         <span className={styles.commentText + ' rainbow'}>Posted By: {comment.name} on {commentDate}</span>
                     </div>
                 );

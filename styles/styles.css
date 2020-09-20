@@ -1,4 +1,4 @@
-html, body, ul, h1, h2, h3, h4, h5, h6 {
+html, body, ul, ol, h1, h2, h3, h4, h5, h6 {
     margin: 0; padding: 0;
     box-sizing: border-box;
 }
@@ -43,8 +43,23 @@ a {
     display: none;
 }
 
-.postContent p {
-    display: block;
+.postContent p, .postContent strong, .postContent em, .postContent strike  {
+    display: inline-block;
+}
+
+.postContentExpanded ul li, .postContentExpanded ol li  {
+    color: yellow;
+    margin-left: 64px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.postContentExpanded ul li {
+    list-style-type: disc;
+}
+
+.postContentExpanded ol li {
+    list-style-type: decimal;
 }
 
 .postContentExpanded img, .postContentExpanded iframe {
@@ -162,6 +177,11 @@ p {
     .postContentExpanded img {
         max-width: 50%;
         height: auto;
+    }
+
+    .postContentExpanded iframe, .postContentExpanded div {
+        max-width: 50%;
+        margin: 0 auto;
     }
 }
 
