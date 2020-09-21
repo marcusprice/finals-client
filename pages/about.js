@@ -4,7 +4,6 @@ import Header from '../components/Header';
 import ContentContainer from '../components/ContentContainer';
 import ReactMarkdown from 'react-markdown/with-html';
 import Footer from '../components/Footer';
-import logo from '../assets/img/FINALS_logo.jpg';
 
 const About = props => (
     <>
@@ -23,7 +22,7 @@ const About = props => (
                 <h2>Finals</h2>
                 <h3>{props.config.tagline}</h3>
                 <div className="marqueeBounce">
-                    <img className="featuredContentImg marqueeBounceContent" src={logo}/>
+                    <img className="featuredContentImg marqueeBounceContent" src={process.env.NEXT_PUBLIC_API_ROUTE + props.aboutPage.about_image.url}/>
                 </div>
                 <div className="about-page-text">
                     <ReactMarkdown source={props.aboutPage.about_text} />
