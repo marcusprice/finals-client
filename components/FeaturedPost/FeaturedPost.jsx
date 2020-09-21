@@ -8,7 +8,6 @@ import Comments from '../Comments';
 const FeaturedPost = props => {
 
     const [expanded, setExpanded] = useState(false);
-    const [comments, setComments] = useState([]);
     const postContent = useRef();
 
     const handleClick = () => {
@@ -39,17 +38,6 @@ const FeaturedPost = props => {
     const altText = (props.featuredArticle.article?.featured_image?.alternativeText) ? props.featuredArticle.article.featured_image.alternativeText : 'gradient placeholder image';
     const title = props.featuredArticle.article.title;
     const postDate = moment(props.featuredArticle.article.created_at).format('MMMM Do, YYYY @ h:mma');
-
-    useEffect(() => {
-        const fetchData = async () => {
-            //get comments
-            const comments = await axios.get(process.env.NEXT_PUBLIC_API_ROUTE + '/comments?_sort=created_at:ASC&article=' + props.featuredArticle.article.id);
-            setComments(comments.data)
-        }
-        fetchData();
-    }, []);
-
-    console.log(comments);
 
     return(
         <section className={styles.container}>

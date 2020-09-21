@@ -53,7 +53,7 @@ a {
 
 .postContentExpanded ul li, .postContentExpanded ol li  {
     color: yellow;
-    margin-left: 64px;
+    margin-left: 32px;
     margin-top: 8px;
     margin-bottom: 8px;
 }
@@ -70,6 +70,12 @@ a {
     display: block;
     margin: 0 auto;
     max-width: 100%;
+}
+
+.postContentExpanded h1, .postContentExpanded h2, .postContentExpanded h3, .postContentExpanded h4, .postContentExpanded h5, .postContentExpanded h6 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-top: 64px;
 }
 
 .terms-of-use-container p, .terms-of-use-container a {
@@ -116,6 +122,10 @@ p {
     line-height: 1.5;
 }
 
+.marqueeBounce img {
+    width: 100%;
+}
+
 /* animations */
 
 .rainbow, strong {
@@ -137,31 +147,12 @@ p {
     }
 }
 
-.marqueeBounce {
-    width: 120%;
-    margin-right: -20%;
-    overflow: hidden;
-    box-sizing: border-box;
-}
-
-.marqueeBounceContent {
-    display: inline-block;
-    animation: marqueeBounce 3s linear infinite;
-}
-
-@keyframes marqueeBounce {
-    0%   { transform: translate(0, 0); }
-    50%   { transform: translate(100%, 0); }
-    75% { transform: translate(50%, 0); }
-    100%   { transform: translate(0, 0); }
-}
-
 /* responsive styles */
 
 @media (min-width: 425px) {
     .featuredContentImg {
         /* margin: 32px auto; */
-        width: 60%;
+        width: 50%;
     }
 }
 
@@ -187,6 +178,10 @@ p {
         max-width: 50%;
         margin: 0 auto;
     }
+
+    .postContentExpanded ul li, .postContentExpanded ol li {
+        margin-left: 64px;
+    }
 }
 
 @media (min-width: 800px) {
@@ -197,7 +192,29 @@ p {
 
     .featuredContentImg {
         /* margin: 64px auto; */
-        width: 40%;
+        width: 50%;
+    }
+
+    .marqueeBounce img {
+        width: 50%;
+    }
+
+    .marqueeBounce {
+        width: 100%;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+    
+    .marqueeBounceContent {
+        display: inline-block;
+        animation: marqueeBounce 3s linear infinite;
+    }
+    
+    @keyframes marqueeBounce {
+        0%   { transform: translate(0, 0); }
+        50%   { transform: translate(100%, 0); }
+        75% { transform: translate(50%, 0); }
+        100%   { transform: translate(0, 0); }
     }
 }
 

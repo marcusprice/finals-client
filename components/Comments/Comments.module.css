@@ -20,6 +20,10 @@
     display: block;
 }
 
+.postedBy {
+    margin-top: 16px;
+}
+
 .commentText {
     font-family: "Comic Sans MS", Verdana, sans-serif;
     font-size: 14px;
