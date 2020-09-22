@@ -26,7 +26,7 @@ const Home = props => {
     </>
 )};
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
 
   const config = await axios.get(process.env.API_ROUTE + '/config');
   const articles = await axios.get(process.env.API_ROUTE + '/articles?_sort=created_at:DESC&_limit=5');

@@ -33,7 +33,7 @@ const About = props => (
     </>
 );
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
 
     const config = await axios.get(process.env.API_ROUTE + '/config');
     const aboutPage = await axios.get(process.env.API_ROUTE + '/about-page');

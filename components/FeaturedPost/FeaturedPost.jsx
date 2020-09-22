@@ -1,5 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
+import { useState, useRef } from 'react';
 import styles from './FeaturedPost.module.css';
 import moment from 'moment';
 import ReactMarkdown from 'react-markdown/with-html';
