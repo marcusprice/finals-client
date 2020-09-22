@@ -9,7 +9,11 @@ const About = props => (
     <>
         <Head>
             <title>Finals - About</title>
+            <meta property="og:title" content={props.config.social_media_title}  />
+            <meta property="og:description" content={props.config.social_media_description} />
+            <meta property="og:url" content="https://finals.blog/about" />
         </Head>
+
         <Header 
             heroImgURI={props.config.hero_image.url} 
             heroLogo={props.config.hero_logo}
@@ -17,6 +21,7 @@ const About = props => (
             aboutImg={props.config.about_image}
             tagline={props.config.tagline} 
             heroOpacity={props.config.hero_opacity} />
+
         <ContentContainer>
             <section className="featuredContent">
                 <h2>Finals</h2>
@@ -29,6 +34,7 @@ const About = props => (
                 </div>
             </section>
         </ContentContainer>
+
         <Footer termsOfUse={props.config.terms_of_use_text} />
     </>
 );

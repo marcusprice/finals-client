@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import axios from 'axios';
 import Header from '../components/Header';
 import ContentContainer from '../components/ContentContainer';
@@ -9,6 +10,13 @@ const Home = props => {
 
   return (
     <>
+    <Head>
+      <title>Finals - {props.config.tagline}</title>
+      <meta property="og:title" content={props.config.social_media_title} />
+      <meta property="og:description" content={props.config.social_media_description} />
+      <meta property="og:url" content="https://finals.blog" />
+    </Head>
+
       <Header 
         heroImgURI={props.config.hero_image.url} 
         heroLogo={props.config.hero_logo}
