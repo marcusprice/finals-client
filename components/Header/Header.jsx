@@ -27,17 +27,19 @@ const Header = props => {
 
                 <nav className={styles.nav}>
                     <ul className={styles.navUl}>
-                        <li className={styles.navItem + " hammer"}>
-                            <span className={styles.navTitle}>Shop</span>
-                            <img className={styles.navGif}  src={process.env.NEXT_PUBLIC_API_ROUTE + props.shopImg.url}  alt={props.shopImg.alternativeText} />
-                        </li>
-
-                        <Link href="/about">
+                        <a href={props.shopURL} target="_blank" rel="noopener noreferrer">
                             <li className={styles.navItem + " hammer"}>
+                                <span className={styles.navTitle}>Shop</span>
+                                <img className={styles.navGif}  src={process.env.NEXT_PUBLIC_API_ROUTE + props.shopImg.url}  alt={props.shopImg.alternativeText} />
+                            </li>
+                        </a>
+                        <Link href="/about">
+                            <a>
+                                <li className={styles.navItem + " hammer"}>
                                     <span className={styles.navTitle}>About</span>
                                     <img className={styles.navGif} src={process.env.NEXT_PUBLIC_API_ROUTE + props.aboutImg.url} alt={props.aboutImg.alternativeText}/>
-                
-                            </li>
+                                </li>
+                            </a>
                         </Link>
                     </ul>
                 </nav>

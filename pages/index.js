@@ -21,6 +21,7 @@ const Home = props => {
         heroImgURI={props.config.hero_image.url} 
         heroLogo={props.config.hero_logo}
         shopImg={props.config.shop_image}
+        shopURL={props.config.shop_link}
         aboutImg={props.config.about_image}
         tagline={props.config.tagline} 
         heroOpacity={props.config.hero_opacity} />
