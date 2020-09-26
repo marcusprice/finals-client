@@ -16,12 +16,14 @@ const FeaturedPost = props => {
         //bandcamp has issues rendering album artwork in next.js and the following code is a solution.
         //this trick is also a nice way to stop playing content when a user closes the post
         
-        //get all iframes within the current post (via ref)
-        let iframes = postContent.current.getElementsByTagName('iframe');
+        if(postContent.current) {
+            //get all iframes within the current post (via ref)
+            let iframes = postContent.current.getElementsByTagName('iframe');
 
-        //loop through each iframe and reload the source
-        for (let node of iframes) { 
-            node.src = node.src;
+            //loop through each iframe and reload the source
+            for (let node of iframes) { 
+                node.src = node.src;
+            }
         }
     }
 
@@ -38,18 +40,28 @@ const FeaturedPost = props => {
     const title = props.featuredArticle.article.title;
     const postDate = moment(props.featuredArticle.article.created_at).format('MMMM Do, YYYY @ h:mma');
 
+    const handleExpanded = () => {
+        if(expanded) {
+            return(
+                <div ref={postContent} className="postContentExpanded">
+                    <ReactMarkdown 
+                            source={props.featuredArticle.article.content} 
+                            escapeHtml={false} 
+                            transformImageUri={uri => process.env.NEXT_PUBLIC_API_ROUTE + uri} />
+                </div>
+            );
+        } else {
+            return '';
+        }
+    }
+
     return(
         <section className={styles.container}>
             <h2 className={styles.rainbow}>Featured Post</h2>
-            <h3 className={styles.rainbow + ' hammer'}>{ title }</h3>
-            <span className={styles.rainbow + ' hammer postInfo'}>Posted by { author } on { postDate }</span>
-            <img className={styles.featuredImage + ' hammer'} src={ featuredImageURI } alt={ altText } />
-            <div ref={postContent} className={((expanded) ? 'postContentExpanded' : 'featuredPostContent')}>
-                <ReactMarkdown 
-                        source={props.featuredArticle.article.content} 
-                        escapeHtml={false} 
-                        transformImageUri={uri => process.env.NEXT_PUBLIC_API_ROUTE + uri} />
-            </div>
+            <h3 className={styles.rainbow + ' hammer'} onClick={() => handleClick()}>{ title }</h3>
+            <span className={styles.rainbow + ' hammer postInfo'} onClick={() => handleClick()}>Posted by { author } on { postDate }</span>
+            <img className={styles.featuredImage + ' hammer'} src={ featuredImageURI } alt={ altText } onClick={() => handleClick()}/>
+                { handleExpanded() }
             {(props.commentsOn) ? <Comments postID={props.featuredArticle.article.id} expanded={expanded}/> : ''}
             <span className={'readMore hammer ' + styles.rainbow} onClick={() => handleClick()}>{(expanded) ? 'Read Less' : 'Read More'}</span>
         </section>

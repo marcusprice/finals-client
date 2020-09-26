@@ -41,6 +41,7 @@ const Comments = props => {
                 setName('');
                 setCommentText('');
                 recaptchaRef.current.reset();
+                setRecaptchaPassed(false);
             } else {
                 alert('You need to confirm you are not a bot...');   
             }

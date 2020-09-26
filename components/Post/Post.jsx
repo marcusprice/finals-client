@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown/with-html';
 import showdown from 'showdown';
 import moment from 'moment';
@@ -27,40 +27,73 @@ const Post = props => {
         }
     }
 
-
-    //break all html tags (and inner content) into array
-    
-    //filter out all tags that are not p tags
-
-    //loop through the p tags and return the first one that does not have an html tag inside it (text only)
-
-    //reduce the text in p tag to be only 55 words
-
-    //add ... at the end of it
-
     const convertTagsToArray = html => {
         const elements = html.split(/<[a-zA-Z0-9]*>([^<.*>;]*)<\/[a-zA-Z0-9]*>/gmi);
         return elements;
     }
-
-    const converter = new showdown.Converter();
-    const markdown = converter.makeHtml(props.postContent);
-    console.log(convertTagsToArray(markdown));
     
 
     const createdBy = (props.author.username && props.author.username !== '') ? props.author.username : props.author.firstname + ' ' + props.author.lastname;
+
+
+    const getPreview = htmlString => {
+        let output = htmlString;
+        //break all html tags (and inner content) into array
+        output = output.split(/\r\n|\n|\r/gm);
+        if(output.length === 0) return '';
+        
+        //filter out all tags that are not p tags
+        output = output.filter(tag => (tag.substring(0, 3) === '<p>'));
+
+        //loop through the p tags and return the first one that does not have an image tag at the beginning 
+        for(let i = 0; i < output.length; i++) {
+            if(output[i].substring(0,7) !== '<p><img') {
+                output = output[i];
+                break;
+            }
+        }
+
+        //remove all inner html tags
+        output = output.replace(/<(.|\n)*?>/g, '');
+
+        const long = (output.length > 26) ? true : false;
+
+        output = output.split(' ').slice(0, 26).join(' ');
+        if(long && output.slice(-1) !== '.') output += '...';
+        return output;
+    }
+
+    const handleExpanded = () => {
+        if(!expanded) {
+            const converter = new showdown.Converter();
+            const markdown = converter.makeHtml(props.postContent);
+            const preview = getPreview(markdown);
+            return (
+                <div ref={postContent} className={'postContent'}>
+                    <p>
+                        { preview }
+                    </p>
+                </div>
+            );
+        } else {
+            const uriPrefix = (process.env.NEXT_PUBLIC_MODE === 'production') ? '' : process.env.NEXT_PUBLIC_API_ROUTE;
+
+            return(
+                <div ref={postContent} className={(expanded) ? 'postContentExpanded' : 'postContent'}>
+                    <ReactMarkdown 
+                        source={props.postContent} 
+                        escapeHtml={false} 
+                        transformImageUri={uri => uriPrefix + uri} />
+                </div>
+            );
+        }
+    } 
 
     return(
         <article className={styles.article + ' ' + ((expanded) ? 'expanded' : '')}>
             <h3>{props.title}</h3>
             <span className="postInfo">Posted by { createdBy } on {date}</span>
-            <div ref={postContent} className={(expanded) ? 'postContentExpanded' : 'postContent'}>
-                <ReactMarkdown 
-                    source={props.postContent} 
-                    escapeHtml={false} 
-                    transformImageUri={uri => process.env.NEXT_PUBLIC_API_ROUTE + uri}
-                />
-            </div>
+            { handleExpanded() }
             {(props.commentsOn) ? <Comments postID={props.postID} expanded={expanded}/> : ''}
             <span className="readMore hammer" onClick={() => handleClick()}>{(expanded) ? 'Read Less' : 'Read More'}</span>
         </article>

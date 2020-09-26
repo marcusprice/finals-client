@@ -27,6 +27,7 @@ li {
 }
 
 a {
+    cursor: url(/hammer.png), pointer;
     text-decoration: none;
 }
 
@@ -35,7 +36,6 @@ a {
 }
 
 .postContent {
-    max-height: 64px;
     overflow: hidden;
 }
 
@@ -92,7 +92,7 @@ h2 {
     font-family: "Comic Sans MS", cursive, sans-serif;
     margin-bottom: 16px;
     color: yellow;
-    font-size: 30px;
+    font-size: 32px;
 }
 
 h3 {
