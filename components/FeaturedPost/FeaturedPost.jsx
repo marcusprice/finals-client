@@ -39,6 +39,7 @@ const FeaturedPost = props => {
     const altText = (props.featuredArticle.article?.featured_image?.alternativeText) ? props.featuredArticle.article.featured_image.alternativeText : 'gradient placeholder image';
     const title = props.featuredArticle.article.title;
     const postDate = moment(props.featuredArticle.article.created_at).format('MMMM Do, YYYY @ h:mma');
+    const uriPrefix = (process.env.NEXT_PUBLIC_MODE === 'production') ? '' : process.env.NEXT_PUBLIC_API_ROUTE;
 
     const handleExpanded = () => {
         if(expanded) {
@@ -47,7 +48,7 @@ const FeaturedPost = props => {
                     <ReactMarkdown 
                             source={props.featuredArticle.article.content} 
                             escapeHtml={false} 
-                            transformImageUri={uri => process.env.NEXT_PUBLIC_API_ROUTE + uri} />
+                            transformImageUri={uri => uriPrefix + uri} />
                 </div>
             );
         } else {
