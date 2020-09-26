@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Converter } from 'showdown';
 import styles from './Header.module.css';
 
 const Header = props => {
@@ -27,19 +28,19 @@ const Header = props => {
 
                 <nav className={styles.nav}>
                     <ul className={styles.navUl}>
-                        <a href={props.shopURL} target="_blank" rel="noopener noreferrer">
                             <li className={styles.navItem + " hammer"}>
-                                <span className={styles.navTitle}>Shop</span>
-                                <img className={styles.navGif}  src={process.env.NEXT_PUBLIC_API_ROUTE + props.shopImg.url}  alt={props.shopImg.alternativeText} />
+                                <a href={props.shopURL} target="_blank" rel="noopener noreferrer">
+                                    <span className={styles.navTitle}>Shop</span>
+                                    <img className={styles.navGif}  src={process.env.NEXT_PUBLIC_API_ROUTE + props.shopImg.url}  alt={props.shopImg.alternativeText} />
+                                </a>
                             </li>
-                        </a>
                         <Link href="/about">
-                            <a>
-                                <li className={styles.navItem + " hammer"}>
+                            <li className={styles.navItem + " hammer"}>
+                                <a>
                                     <span className={styles.navTitle}>About</span>
-                                    <img className={styles.navGif} src={process.env.NEXT_PUBLIC_API_ROUTE + props.aboutImg.url} alt={props.aboutImg.alternativeText}/>
-                                </li>
-                            </a>
+                                    <img className={styles.navGif} src={process.env.NEXT_PUBLIC_API_ROUTE + props.aboutImg.url} alt={props.aboutImg.alternativeText} />
+                                </a>
+                            </li>
                         </Link>
                     </ul>
                 </nav>

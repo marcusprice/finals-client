@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import ReactMarkdown from 'react-markdown/with-html';
+import showdown from 'showdown';
 import moment from 'moment';
 import styles from './Post.module.css';
 import Comments from '../Comments';
@@ -25,6 +26,27 @@ const Post = props => {
             node.src = node.src;
         }
     }
+
+
+    //break all html tags (and inner content) into array
+    
+    //filter out all tags that are not p tags
+
+    //loop through the p tags and return the first one that does not have an html tag inside it (text only)
+
+    //reduce the text in p tag to be only 55 words
+
+    //add ... at the end of it
+
+    const convertTagsToArray = html => {
+        const elements = html.split(/<[a-zA-Z0-9]*>([^<.*>;]*)<\/[a-zA-Z0-9]*>/gmi);
+        return elements;
+    }
+
+    const converter = new showdown.Converter();
+    const markdown = converter.makeHtml(props.postContent);
+    console.log(convertTagsToArray(markdown));
+    
 
     const createdBy = (props.author.username && props.author.username !== '') ? props.author.username : props.author.firstname + ' ' + props.author.lastname;
 

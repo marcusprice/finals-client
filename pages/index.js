@@ -12,6 +12,7 @@ const Home = props => {
     <>
     <Head>
       <title>Finals - {props.config.tagline}</title>
+      <meta name="description" content={props.config.social_media_description} />
       <meta property="og:title" content={props.config.social_media_title} />
       <meta property="og:description" content={props.config.social_media_description} />
       <meta property="og:url" content="https://finals.blog" />

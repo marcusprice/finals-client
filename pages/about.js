@@ -9,6 +9,7 @@ const About = props => (
     <>
         <Head>
             <title>Finals - About</title>
+            <meta name="description" content={props.config.social_media_description} />
             <meta property="og:title" content={props.config.social_media_title}  />
             <meta property="og:description" content={props.config.social_media_description} />
             <meta property="og:url" content="https://finals.blog/about" />
@@ -28,7 +29,7 @@ const About = props => (
                 <h2>Finals</h2>
                 <h3>{props.config.tagline}</h3>
                 <div className="marqueeBounce">
-                    <img className="featuredContentImg marqueeBounceContent" src={process.env.NEXT_PUBLIC_API_ROUTE + props.aboutPage.about_image.url}/>
+                    <img className="featuredContentImg marqueeBounceContent" src={process.env.NEXT_PUBLIC_API_ROUTE + props.aboutPage.about_image.url} alt={props.aboutPage.about_image.alternativeText} />
                 </div>
                 <div className="about-page-text">
                     <ReactMarkdown source={props.aboutPage.about_text} />
