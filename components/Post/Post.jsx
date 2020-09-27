@@ -48,7 +48,7 @@ const Post = props => {
         const long = (output.length > 26) ? true : false;
 
         output = output.split(' ').slice(0, 26).join(' ');
-        if(long && (output.slice(-1) !== '.' || output.slice(-1) !== '!' || output.slice(-1) !== '?')) output += '...';
+        if(long || output.slice(-1) !== '.' || output.slice(-1) !== '!' || output.slice(-1) !== '?') output += '...';
         return output;
     }
 
