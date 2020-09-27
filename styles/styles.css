@@ -7,6 +7,10 @@ html {
     box-sizing: border-box;
 }
 
+body {
+    background-image: url('/stars.gif');
+}
+
 *, *:before, *:after {
     box-sizing: inherit;
 }
@@ -26,13 +30,9 @@ li {
     list-style-type: none;
 }
 
-a {
-    cursor: url(/hammer.png), pointer;
+a, .hammer {
+    cursor: url('/hammer.png'), pointer;
     text-decoration: none;
-}
-
-.hammer {
-    cursor: url(/hammer.png), pointer;
 }
 
 .postContent {
@@ -73,9 +73,7 @@ a {
 }
 
 .postContentExpanded h1, .postContentExpanded h2, .postContentExpanded h3, .postContentExpanded h4, .postContentExpanded h5, .postContentExpanded h6 {
-    font-size: 24px;
     font-weight: 700;
-    margin-top: 64px;
 }
 
 .terms-of-use-container p, .terms-of-use-container a {
@@ -99,6 +97,19 @@ h3 {
     margin-bottom: 8px;
     font-size: 24px;
     color: yellow;
+    margin-top: 32px;
+}
+
+h4 {
+    color: yellow;
+    font-size: 20px;
+    margin-top: 16px;
+}
+
+h5, h6 {
+    color: yellow;
+    font-size: 20px;
+    margin-top: 16px;
 }
 
 .postInfo, .readMore {

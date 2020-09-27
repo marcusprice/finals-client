@@ -35,10 +35,10 @@ const FeaturedPost = props => {
         author = props.featuredArticle.created_by.firstname + ' ' + props.featuredArticle.created_by.lastname;
     }
 
-    const featuredImageURI = (props.featuredArticle?.article?.featured_image?.url) ? process.env.NEXT_PUBLIC_API_ROUTE + props.featuredArticle.article.featured_image.url : '/placeholder.png';
-    const altText = (props.featuredArticle.article?.featured_image?.alternativeText) ? props.featuredArticle.article.featured_image.alternativeText : 'gradient placeholder image';
-    const title = props.featuredArticle.article.title;
-    const postDate = moment(props.featuredArticle.article.created_at).format('MMMM Do, YYYY @ h:mma');
+    const featuredImageURI = (props.featuredArticle?.featured_image?.url) ? process.env.NEXT_PUBLIC_API_ROUTE + props.featuredArticle.featured_image.url : '/placeholder.png';
+    const altText = (props.featuredArticle?.featured_image?.alternativeText) ? props.featuredArticle.featured_image.alternativeText : 'gradient placeholder image';
+    const title = props.featuredArticle.title;
+    const postDate = moment(props.featuredArticle.created_at).format('MMMM Do, YYYY @ h:mma');
     const uriPrefix = (process.env.NEXT_PUBLIC_MODE === 'production') ? '' : process.env.NEXT_PUBLIC_API_ROUTE;
 
     const handleExpanded = () => {
@@ -46,7 +46,7 @@ const FeaturedPost = props => {
             return(
                 <div ref={postContent} className="postContentExpanded">
                     <ReactMarkdown 
-                            source={props.featuredArticle.article.content} 
+                            source={props.featuredArticle.content} 
                             escapeHtml={false} 
                             transformImageUri={uri => uriPrefix + uri} />
                 </div>
@@ -63,7 +63,7 @@ const FeaturedPost = props => {
             <span className={styles.rainbow + ' hammer postInfo'} onClick={() => handleClick()}>Posted by { author } on { postDate }</span>
             <img className={styles.featuredImage + ' hammer'} src={ featuredImageURI } alt={ altText } onClick={() => handleClick()}/>
                 { handleExpanded() }
-            {(props.commentsOn) ? <Comments postID={props.featuredArticle.article.id} expanded={expanded}/> : ''}
+            {(props.commentsOn) ? <Comments postID={props.featuredArticle.id} expanded={expanded}/> : ''}
             <span className={'readMore hammer ' + styles.rainbow} onClick={() => handleClick()}>{(expanded) ? 'Read Less' : 'Read More'}</span>
         </section>
     )

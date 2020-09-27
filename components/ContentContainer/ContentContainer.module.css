@@ -1,7 +1,6 @@
 .container {
     width: 100%;
     padding: 64px 16px;
-    background: url("/stars.gif");
 }
 
 @media (min-width: 640px) {

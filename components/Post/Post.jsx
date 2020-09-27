@@ -9,8 +9,6 @@ const Post = props => {
     const [expanded, setExpanded] = useState(false);    //state to manage whether the post is expanded or not
     const postContent = useRef();                       //ref used to get copy of post container for bandcamp/iframe fix
 
-    const date = moment(props.date).format('MMMM Do, YYYY @ h:mma');
-
     const handleClick = () => {
         //expands/un-expands post
         setExpanded(!expanded);
@@ -26,15 +24,6 @@ const Post = props => {
             node.src = node.src;
         }
     }
-
-    const convertTagsToArray = html => {
-        const elements = html.split(/<[a-zA-Z0-9]*>([^<.*>;]*)<\/[a-zA-Z0-9]*>/gmi);
-        return elements;
-    }
-    
-
-    const createdBy = (props.author.username && props.author.username !== '') ? props.author.username : props.author.firstname + ' ' + props.author.lastname;
-
 
     const getPreview = htmlString => {
         let output = htmlString;
@@ -59,7 +48,7 @@ const Post = props => {
         const long = (output.length > 26) ? true : false;
 
         output = output.split(' ').slice(0, 26).join(' ');
-        if(long && output.slice(-1) !== '.') output += '...';
+        if(long && (output.slice(-1) !== '.' || output.slice(-1) !== '!' || output.slice(-1) !== '?')) output += '...';
         return output;
     }
 
@@ -79,7 +68,7 @@ const Post = props => {
             const uriPrefix = (process.env.NEXT_PUBLIC_MODE === 'production') ? '' : process.env.NEXT_PUBLIC_API_ROUTE;
 
             return(
-                <div ref={postContent} className={(expanded) ? 'postContentExpanded' : 'postContent'}>
+                <div ref={postContent} className="postContentExpanded" >
                     <ReactMarkdown 
                         source={props.postContent} 
                         escapeHtml={false} 
@@ -88,6 +77,9 @@ const Post = props => {
             );
         }
     } 
+
+    const createdBy = (props.author.username && props.author.username !== '') ? props.author.username : props.author.firstname + ' ' + props.author.lastname;
+    const date = moment(props.date).format('MMMM Do, YYYY @ h:mma');
 
     return(
         <article className={styles.article + ' ' + ((expanded) ? 'expanded' : '')}>

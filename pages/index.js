@@ -40,13 +40,14 @@ export async function getServerSideProps() {
 
   const config = await axios.get(process.env.API_ROUTE + '/config');
   const articles = await axios.get(process.env.API_ROUTE + '/articles?_sort=created_at:DESC&_limit=5');
-  const featuredArticle = await axios.get(process.env.API_ROUTE + '/featured-article');
+  const featuredArticleContentType = await axios.get(process.env.API_ROUTE + '/featured-article');
+  const featuredArticle = await axios.get(process.env.API_ROUTE + '/articles?id=' + featuredArticleContentType.data.article.id);
 
   return {
     props: {
       config: config.data,
       posts: articles.data,
-      featuredArticle: featuredArticle.data
+      featuredArticle: featuredArticle.data[0]
     }
   }
 }
