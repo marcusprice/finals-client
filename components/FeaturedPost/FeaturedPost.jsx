@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import Link from 'next/link'
 import styles from './FeaturedPost.module.css';
 import moment from 'moment';
 import ReactMarkdown from 'react-markdown/with-html';
@@ -60,7 +61,11 @@ const FeaturedPost = props => {
         <section className={styles.container}>
             <h2 className={styles.rainbow}>Featured Post</h2>
             <h3 className={styles.rainbow + ' hammer'} onClick={() => handleClick()}>{ title }</h3>
-            <span className={styles.rainbow + ' hammer postInfo'} onClick={() => handleClick()}>Posted by { author } on { postDate }</span>
+            <Link href={'./posts/' + props.featuredArticle.id}>
+                <a>
+                    <span className={styles.rainbow + ' hammer postInfo'}>Posted by { author } on { postDate }</span>
+                </a>
+            </Link>
             <img className={styles.featuredImage + ' hammer'} src={ featuredImageURI } alt={ altText } onClick={() => handleClick()}/>
                 { handleExpanded() }
             {(props.commentsOn) ? <Comments postID={props.featuredArticle.id} expanded={expanded}/> : ''}

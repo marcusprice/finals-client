@@ -26,6 +26,13 @@ body {
     width: 75%;
 }
 
+.postImage {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 16px auto;
+}
+
 li {
     list-style-type: none;
 }
@@ -43,12 +50,12 @@ a, .hammer {
     display: none;
 }
 
-.postContent *, .commentsHidden {
+.commentsHidden {
     display: none;
 }
 
-.postContent p, .postContent strong, .postContent em, .postContent strike  {
-    display: inline-block;
+.postContentExpanded p strong, .postContentExpanded p em, .postContentExpanded p strike  {
+    display: inline;
 }
 
 .postContentExpanded ul li, .postContentExpanded ol li  {

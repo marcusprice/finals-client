@@ -22,7 +22,7 @@ const BlogPosts = props => {
     
     const fetchMorePosts = () => {
         setTimeout(async () => {
-            const uri = process.env.NEXT_PUBLIC_API_ROUTE + '/articles?_sort=created_at:DESC&_start=' + posts.length + '&_limit=5';
+            const uri = process.env.NEXT_PUBLIC_API_ROUTE + '/articles?published=true&_sort=created_at:DESC&_start=' + posts.length + '&_limit=5';
             const result = await axios.get(uri);
             if(result.data.length > 0) {
                 setPosts(posts.concat(result.data.map(post => (

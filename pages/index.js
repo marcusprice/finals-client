@@ -19,13 +19,13 @@ const Home = props => {
     </Head>
 
       <Header 
-        heroImgURI={props.config.hero_image.url} 
-        heroLogo={props.config.hero_logo}
-        shopImg={props.config.shop_image}
-        shopURL={props.config.shop_link}
-        aboutImg={props.config.about_image}
-        tagline={props.config.tagline} 
-        heroOpacity={props.config.hero_opacity} />
+        heroImgURI={props.config.hero_image?.url} 
+        heroLogo={props.config?.hero_logo}
+        shopImg={props.config?.shop_image}
+        shopURL={props.config?.shop_link}
+        aboutImg={props.config?.about_image}
+        tagline={props.config?.tagline} 
+        heroOpacity={props.config?.hero_opacity} />
 
       <ContentContainer>
         <FeaturedPost commentsOn={props.config.comments} featuredArticle={props.featuredArticle} />
@@ -38,15 +38,36 @@ const Home = props => {
 
 export async function getServerSideProps() {
 
-  const config = await axios.get(process.env.API_ROUTE + '/config');
-  const articles = await axios.get(process.env.API_ROUTE + '/articles?_sort=created_at:DESC&_limit=5');
-  const featuredArticleContentType = await axios.get(process.env.API_ROUTE + '/featured-article');
-  const featuredArticle = await axios.get(process.env.API_ROUTE + '/articles?id=' + featuredArticleContentType.data.article.id);
+  let config, articles, featuredArticleContentType, featuredArticle;
+  
+  try {
+    config = await axios.get(process.env.API_ROUTE + '/config');
+    articles = await axios.get(process.env.API_ROUTE + '/articles?published=true&_sort=created_at:DESC&_limit=5');
+    featuredArticleContentType = await axios.get(process.env.API_ROUTE + '/featured-article');
 
+    //handle featured article
+    if(featuredArticleContentType.data.article) {
+      //if a featured article is set, use it
+      featuredArticle = await axios.get(process.env.API_ROUTE + '/articles?id=' + featuredArticleContentType.data.article.id);
+    } else {
+      //otherwise grab the most recent published post
+      featuredArticle = await axios.get(process.env.API_ROUTE + '/articles?published=true&_sort=created_at:DESC&_limit=5');
+      if(!featuredArticle.data[0]) {
+        //there are no published posts, so use the most recent post that was made
+        featuredArticle = await axios.get(process.env.API_ROUTE + '/articles');
+      }
+    }
+  } catch {
+    config = [];
+    articles = [];
+    featuredArticleContentType = [];
+    featuredArticle = [];
+  }
+  
   return {
     props: {
-      config: config.data,
-      posts: articles.data,
+      config: config?.data,
+      posts: articles?.data,
       featuredArticle: featuredArticle.data[0]
     }
   }

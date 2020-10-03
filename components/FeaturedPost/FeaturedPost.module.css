@@ -23,8 +23,9 @@
 }
 
 .featuredImage {
+    margin: 16px auto;
     display: block;
-    width: 100%;
+    max-width: 100%;
 }
 
 @media (min-width: 640px) {

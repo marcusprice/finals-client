@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
+import Link from 'next/link'
 import ReactMarkdown from 'react-markdown/with-html';
 import showdown from 'showdown';
 import moment from 'moment';
@@ -26,10 +27,10 @@ const Post = props => {
     }
 
     const getPreview = htmlString => {
+
         let output = htmlString;
         //break all html tags (and inner content) into array
         output = output.split(/\r\n|\n|\r/gm);
-        if(output.length === 0) return '';
         
         //filter out all tags that are not p tags
         output = output.filter(tag => (tag.substring(0, 3) === '<p>'));
@@ -48,7 +49,7 @@ const Post = props => {
         const long = (output.length > 26) ? true : false;
 
         output = output.split(' ').slice(0, 26).join(' ');
-        if(long || output.slice(-1) !== '.' || output.slice(-1) !== '!' || output.slice(-1) !== '?') output += '...';
+        if(long && output.slice(-1) !== '.' && output.slice(-1) !== '!' && output.slice(-1) !== '?') { output += '...' };
         return output;
     }
 
@@ -84,7 +85,11 @@ const Post = props => {
     return(
         <article className={styles.article + ' ' + ((expanded) ? 'expanded' : '')}>
             <h3>{props.title}</h3>
-            <span className="postInfo">Posted by { createdBy } on {date}</span>
+            <Link href={'./posts/' + props.postID}>
+                <a>
+                    <span className="postInfo">Posted by { createdBy } on {date}</span>
+                </a>
+            </Link>
             { handleExpanded() }
             {(props.commentsOn) ? <Comments postID={props.postID} expanded={expanded}/> : ''}
             <span className="readMore hammer" onClick={() => handleClick()}>{(expanded) ? 'Read Less' : 'Read More'}</span>
