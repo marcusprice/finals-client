@@ -15,6 +15,7 @@ const BlogPosts = props => {
             comments={post.comments}
             commentsOn={props.commentsOn}
             postID={post.id}
+            slug={post.slug}
             key={Math.floor(Math.random() * 50000)} />
     )));
 
@@ -34,6 +35,7 @@ const BlogPosts = props => {
                         comments={post.comments}
                         commentsOn={props.commentsOn}
                         postID={post.id}
+                        slug={post.slug}
                         key={Math.floor(Math.random() * 50000)} />
                 ))));
             } else {

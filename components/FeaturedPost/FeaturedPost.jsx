@@ -61,7 +61,7 @@ const FeaturedPost = props => {
         <section className={styles.container}>
             <h2 className={styles.rainbow}>Featured Post</h2>
             <h3 className={styles.rainbow + ' hammer'} onClick={() => handleClick()}>{ title }</h3>
-            <Link href={'./posts/' + props.featuredArticle.id}>
+            <Link href={'./posts/' + props.featuredArticle.slug}>
                 <a>
                     <span className={styles.rainbow + ' hammer postInfo'}>Posted by { author } on { postDate }</span>
                 </a>

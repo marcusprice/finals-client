@@ -72,7 +72,7 @@ const Post = props => {
             <meta name="description" content={description} />
             <meta property="og:title" content={props.post.title} />
             <meta property="og:description" content={description} />
-            <meta property="og:url" content="https://finals.blog" />
+            <meta property="og:url" content={'https://finals.blog/posts/' + props.post.slug} />
         </Head>
 
         <Header 
@@ -92,9 +92,9 @@ const Post = props => {
                     { (featuredImageURI !== '') ? <img className="postImage" src={ featuredImageURI } alt={ altText }/> : ''}
                     <div className="postContentExpanded" ref={postContent}>
                         <ReactMarkdown 
-                                source={props.post.content} 
-                                escapeHtml={false} 
-                                transformImageUri={uri => uriPrefix + uri} />
+                            source={props.post.content} 
+                            escapeHtml={false} 
+                            transformImageUri={uri => uriPrefix + uri} />
 
                     </div>
                 </article>
@@ -108,10 +108,10 @@ const Post = props => {
 
 export async function getServerSideProps(context) {
 
-    const { id } = context.params;
+    const { slug } = context.params;
 
     const config = await axios.get(process.env.API_ROUTE + '/config');
-    const post = await axios.get(process.env.API_ROUTE + '/articles?id=' + id);
+    const post = await axios.get(process.env.API_ROUTE + '/articles?slug=' + slug);
   
     return {
         props: {

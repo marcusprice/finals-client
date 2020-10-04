@@ -9,8 +9,15 @@ import Comments from '../Comments';
 const Post = props => {
     const [expanded, setExpanded] = useState(false);    //state to manage whether the post is expanded or not
     const postContent = useRef();                       //ref used to get copy of post container for bandcamp/iframe fix
+    const articleRef = useRef();
+
+    console.log(props);
 
     const handleClick = () => {
+        if(expanded) {
+            articleRef.current.scrollIntoView();
+        }
+
         //expands/un-expands post
         setExpanded(!expanded);
 
@@ -83,9 +90,9 @@ const Post = props => {
     const date = moment(props.date).format('MMMM Do, YYYY @ h:mma');
 
     return(
-        <article className={styles.article + ' ' + ((expanded) ? 'expanded' : '')}>
+        <article ref={articleRef} className={styles.article + ' ' + ((expanded) ? 'expanded' : '')}>
             <h3>{props.title}</h3>
-            <Link href={'./posts/' + props.postID}>
+            <Link href={'./posts/' + props.slug}>
                 <a>
                     <span className="postInfo">Posted by { createdBy } on {date}</span>
                 </a>
