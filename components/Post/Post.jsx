@@ -11,8 +11,6 @@ const Post = props => {
     const postContent = useRef();                       //ref used to get copy of post container for bandcamp/iframe fix
     const articleRef = useRef();
 
-    console.log(props);
-
     const handleClick = () => {
         if(expanded) {
             articleRef.current.scrollIntoView();

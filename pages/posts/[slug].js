@@ -38,8 +38,6 @@ const Post = props => {
         return output;
     }
 
-    console.log(props);
-
     const createdBy = (props.post.created_by.username && props.post.created_by.username !== '') ? props.post.created_by.username : props.post.created_by.firstname + ' ' + props.post.created_by.lastname;
     const date = moment(props.post.created_at).format('MMMM Do, YYYY @ h:mma');
     const featuredImageURI = (props.post.featured_image?.url) ? process.env.NEXT_PUBLIC_API_ROUTE + props.post.featured_image.url : '';
