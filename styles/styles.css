@@ -58,6 +58,10 @@ a, .hammer {
     color: yellow;
 }
 
+.postContentExpanded a, .postContentExpanded p a {
+    color: #39FF14;
+}
+
 .postContentExpanded p strong, .postContentExpanded p em, .postContentExpanded p strike  {
     display: inline;
 }
