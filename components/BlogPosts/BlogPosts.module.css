@@ -1,59 +1,72 @@
 .container {
-    max-width: 1024px;
-    margin: 0 auto;
-    margin-top: 64px;
+  max-width: 1024px;
+  margin: 0 auto;
+  margin-top: 64px;
 }
- 
+
 .postsContainer {
-    columns: 2;
+  columns: 2;
 }
 
 .blogPost {
-    padding: 16px 0;
-    width: 100%;
-    margin-bottom: 64px;
+  padding: 16px 0;
+  width: 100%;
+  margin-bottom: 64px;
 }
 
 .postImage {
-    width: 100%;
-    display: block;
-    margin: 32px auto;
+  width: 100%;
+  display: block;
+  margin: 32px auto;
 }
 
 .loadingGif {
-    width: 50%;
-    display: block;
-    margin: 0 auto;
+  width: 50%;
+  display: block;
+  margin: 0 auto;
+}
+
+.categoryContainer {
+  display: inline;
+  margin-right: 32px;
+}
+
+.categoryText {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  color: yellow;
+  font-size: 28px;
+}
+
+.selectedCategoryText {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-size: 28px;
 }
 
 @media (min-width: 640px) {
-    .container {
-        margin-top: 128px;
-    }
+  .container {
+    margin-top: 128px;
+  }
 
-    .postImage {
-        width: 50%;
-        display: block;
-        margin: 32px auto;
-    }
+  .postImage {
+    width: 50%;
+    display: block;
+    margin: 32px auto;
+  }
 
-    .blogPost {
-        margin-bottom: 256px;
-    }
+  .blogPost {
+    margin-bottom: 256px;
+  }
 
-    .loadingGif {
-        width: 25%;
-    }
+  .loadingGif {
+    width: 25%;
+  }
 }
 
 @media (min-width: 800px) {
-
 }
 
 @media (min-width: 1024px) {
-
 }
 
 @media (min-width: 1280px) {
-
 }
