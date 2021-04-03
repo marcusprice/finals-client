@@ -32,7 +32,6 @@ const fetchPosts = (category, numberOfPosts, delay) => {
     setTimeout(async () => {
       try {
         const posts = await axios.get(uri);
-        console.log(posts);
         resolve(posts);
       } catch (err) {
         reject(err);
