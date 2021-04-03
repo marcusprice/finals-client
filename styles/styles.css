@@ -72,7 +72,8 @@ a,
 }
 
 .postContentExpanded a,
-.postContentExpanded p a {
+.postContentExpanded p a,
+about-page-text a {
   color: #39ff14;
 }
 
@@ -169,6 +170,7 @@ h6 {
 }
 
 .postInfo {
+  margin-top: 8px;
   margin-bottom: 4px;
 }
 
@@ -185,6 +187,13 @@ p {
 
 .marqueeBounce img {
   width: 100%;
+}
+
+.categoryTag {
+  display: inline-block;
+  margin-right: 32px;
+  color: yellow;
+  font-size: 24px;
 }
 
 /* animations */

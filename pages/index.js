@@ -68,7 +68,6 @@ export async function getServerSideProps() {
     );
 
     categories = await axios.get(process.env.API_ROUTE + '/categories');
-    console.log(categories.data);
 
     //handle featured article
     if (featuredArticleContentType.data.article) {

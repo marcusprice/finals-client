@@ -48,7 +48,10 @@ const About = (props) => (
           />
         </div>
         <div className='about-page-text'>
-          <ReactMarkdown source={props.aboutPage.about_text} />
+          <ReactMarkdown
+            source={props.aboutPage.about_text}
+            linkTarget='_blank'
+          />
         </div>
       </section>
     </ContentContainer>

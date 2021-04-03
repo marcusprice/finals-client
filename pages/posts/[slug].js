@@ -9,6 +9,20 @@ import ContentContainer from '../../components/ContentContainer';
 import Comments from '../../components/Comments';
 import Footer from '../../components/Footer';
 
+const displayCategories = (categories) => {
+  let output = '';
+
+  if (categories?.length > 0) {
+    const categoryTags = categories.map((category) => (
+      <li className='categoryTag'>#{category.Name}</li>
+    ));
+
+    output = <ul>{categoryTags}</ul>;
+  }
+
+  return output;
+};
+
 const Post = (props) => {
   const postContent = useRef(); //ref used to get copy of post container for bandcamp/iframe fix
   const getDescription = (htmlString) => {
@@ -102,6 +116,7 @@ const Post = (props) => {
         <section className='featuredContent'>
           <article>
             <h3>{props.post.title}</h3>
+            {displayCategories(props.post.categories)}
             <span className='postInfo'>
               Posted by {createdBy} on {date}
             </span>

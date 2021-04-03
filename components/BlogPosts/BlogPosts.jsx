@@ -14,6 +14,7 @@ const createPost = (post, commentsOn) => (
     commentsOn={commentsOn}
     postID={post.id}
     slug={post.slug}
+    categories={post.categories}
     key={Math.floor(Math.random() * 50000)}
   />
 );
@@ -31,6 +32,7 @@ const fetchPosts = (category, numberOfPosts, delay) => {
     setTimeout(async () => {
       try {
         const posts = await axios.get(uri);
+        console.log(posts);
         resolve(posts);
       } catch (err) {
         reject(err);

@@ -6,6 +6,20 @@ import moment from 'moment';
 import styles from './Post.module.css';
 import Comments from '../Comments';
 
+const displayCategories = (categories) => {
+  let output = '';
+
+  if (categories.length > 0) {
+    const categoryTags = categories.map((category) => (
+      <li className='categoryTag'>#{category.Name}</li>
+    ));
+
+    output = <ul>{categoryTags}</ul>;
+  }
+
+  return output;
+};
+
 const Post = (props) => {
   const [expanded, setExpanded] = useState(false); //state to manage whether the post is expanded or not
   const postContent = useRef(); //ref used to get copy of post container for bandcamp/iframe fix
@@ -94,6 +108,7 @@ const Post = (props) => {
   return (
     <article ref={articleRef} className={expanded ? 'expanded' : ''}>
       <h3>{props.title}</h3>
+      {displayCategories(props.categories)}
       <Link href={'./posts/' + props.slug}>
         <a>
           <span className='postInfo'>
