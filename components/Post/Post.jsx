@@ -71,8 +71,6 @@ const Post = (props) => {
         </div>
       );
     } else {
-      console.log(process.env.NEXT_PUBLIC_MODE);
-
       return (
         <div ref={postContent} className='postContentExpanded'>
           <ReactMarkdown
@@ -94,9 +92,7 @@ const Post = (props) => {
   const date = moment(props.date).format('MMMM Do, YYYY @ h:mma');
 
   return (
-    <article
-      ref={articleRef}
-      className={styles.article + ' ' + (expanded ? 'expanded' : '')}>
+    <article ref={articleRef} className={expanded ? 'expanded' : ''}>
       <h3>{props.title}</h3>
       <Link href={'./posts/' + props.slug}>
         <a>

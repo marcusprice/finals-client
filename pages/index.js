@@ -68,10 +68,7 @@ export async function getServerSideProps() {
     );
 
     categories = await axios.get(process.env.API_ROUTE + '/categories');
-
-    categories = categories.data.map((category) => {
-      return category.Name;
-    });
+    console.log(categories.data);
 
     //handle featured article
     if (featuredArticleContentType.data.article) {
@@ -105,7 +102,7 @@ export async function getServerSideProps() {
       config: config?.data,
       posts: articles?.data,
       featuredArticle: featuredArticle.data[0],
-      categories: categories,
+      categories: categories.data,
     },
   };
 }

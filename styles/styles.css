@@ -125,6 +125,14 @@ a,
   text-decoration: underline;
 }
 
+article {
+  margin-bottom: 128px;
+}
+
+article:last-of-type {
+  margin-bottom: 0;
+}
+
 /* typography */
 h2 {
   font-family: 'Comic Sans MS', cursive, sans-serif;

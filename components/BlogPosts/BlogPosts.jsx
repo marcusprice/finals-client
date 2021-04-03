@@ -4,87 +4,146 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import styles from './BlogPosts.module.css';
 import Post from '../Post';
 
+const createPost = (post, commentsOn) => (
+  <Post
+    title={post.title}
+    author={post.created_by}
+    postContent={post.content}
+    date={post.created_at}
+    comments={post.comments}
+    commentsOn={commentsOn}
+    postID={post.id}
+    slug={post.slug}
+    key={Math.floor(Math.random() * 50000)}
+  />
+);
+
+const fetchPosts = (category, numberOfPosts, delay) => {
+  let uri =
+    process.env.NEXT_PUBLIC_API_ROUTE +
+    '/articles?published=true&_sort=created_at:DESC&_limit=5&_start=' +
+    numberOfPosts;
+
+  if (category?.Name) uri += '&categories=' + category.id;
+  const delayTime = delay ? Math.floor(Math.random() * 1000 + 1000) : 0;
+
+  return new Promise((resolve, reject) => {
+    setTimeout(async () => {
+      try {
+        const posts = await axios.get(uri);
+        resolve(posts);
+      } catch (err) {
+        reject(err);
+      }
+    }, delayTime);
+  });
+};
+
+const getPosts = async (setPosts, setHasMore, settings) => {
+  const {
+    category,
+    numberOfPosts,
+    commentsOn,
+    deleteCurrentPosts,
+    currentPosts,
+    delay,
+    categoryChange,
+  } = settings;
+
+  try {
+    const posts = await fetchPosts(category, numberOfPosts, delay);
+    if (posts.data.length > 0) {
+      const newPosts = posts.data.map((post) => createPost(post, commentsOn));
+      if (deleteCurrentPosts) {
+        setPosts(newPosts);
+      } else {
+        setPosts(currentPosts.concat(newPosts));
+      }
+    } else {
+      if (categoryChange) {
+        setPosts([]);
+      }
+      setHasMore(false);
+    }
+  } catch (error) {
+    console.error('error from getPosts:', error);
+  }
+};
+
+const determineCategoryTextClass = (text, selected) => {
+  // selected
+  if (selected === undefined) {
+    selected = '';
+  }
+
+  return text === selected
+    ? styles.selectedCategoryText + ' rainbow'
+    : styles.categoryText;
+};
+
 const BlogPosts = (props) => {
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [hasMore, setHasMore] = useState(true);
   const [posts, setPosts] = useState(
-    props.posts.map((post) => (
-      <Post
-        title={post.title}
-        author={post.created_by}
-        postContent={post.content}
-        date={post.created_at}
-        comments={post.comments}
-        commentsOn={props.commentsOn}
-        postID={post.id}
-        slug={post.slug}
-        key={Math.floor(Math.random() * 50000)}
-      />
-    ))
+    props.posts.map((post) => createPost(post, props.commentsOn))
   );
 
-  const handleCategories = (categories) => {
-    let output = '';
-    if (categories.length > 0) {
-      output = (
-        <ul>
-          {categories.map((category) => {
-            const textClass =
-              selectedCategory === category
-                ? styles.selectedCategoryText + ' rainbow'
-                : styles.categoryText;
+  const handleCategories = (categories) => (
+    <ul>
+      <li
+        className={styles.categoryContainer + ' hammer'}
+        onClick={async () => {
+          const settings = {
+            category: null,
+            numberOfPosts: 0,
+            commentsOn: props.commentsOn,
+            deleteCurrentPosts: true,
+            currentPosts: posts,
+            delay: false,
+            categoryChange: true,
+          };
 
-            return (
-              <li
-                onClick={() => {
-                  console.log();
-                  setSelectedCategory(category);
-                }}
-                className={styles.categoryContainer + ' hammer'}
-                key={Math.floor(Math.random() * 50000)}>
-                <span className={textClass}>{category}</span>
-              </li>
-            );
-          })}
-        </ul>
-      );
-    } else {
-    }
+          setSelectedCategory(null);
+          getPosts(setPosts, setHasMore, settings);
+          setHasMore(true);
+        }}>
+        <span
+          className={determineCategoryTextClass('', selectedCategory?.Name)}>
+          All
+        </span>
+      </li>
+      {categories.map((category) => {
+        return (
+          <li
+            onClick={() => {
+              const settings = {
+                category,
+                numberOfPosts: 0,
+                commentsOn: props.commentsOn,
+                deleteCurrentPosts: true,
+                currentPosts: posts,
+                delay: false,
+                categoryChange: true,
+              };
 
-    return output;
-  };
-
-  const fetchMorePosts = () => {
-    setTimeout(async () => {
-      const uri =
-        process.env.NEXT_PUBLIC_API_ROUTE +
-        '/articles?published=true&_sort=created_at:DESC&_start=' +
-        posts.length +
-        '&_limit=5';
-      const result = await axios.get(uri);
-      if (result.data.length > 0) {
-        setPosts(
-          posts.concat(
-            result.data.map((post) => (
-              <Post
-                title={post.title}
-                author={post.created_by}
-                postContent={post.content}
-                date={post.created_at}
-                comments={post.comments}
-                commentsOn={props.commentsOn}
-                postID={post.id}
-                slug={post.slug}
-                key={Math.floor(Math.random() * 50000)}
-              />
-            ))
-          )
+              setSelectedCategory(category);
+              getPosts(setPosts, setHasMore, settings);
+              setHasMore(true);
+            }}
+            className={styles.categoryContainer + ' hammer'}
+            key={Math.floor(Math.random() * 50000)}>
+            <span
+              className={determineCategoryTextClass(
+                category.Name,
+                selectedCategory?.Name
+              )}>
+              {category.Name}
+            </span>
+          </li>
         );
-      } else {
-        setHasMore(false);
-      }
-    }, Math.floor(Math.random() * 1000) + 1000);
-  };
+      })}
+    </ul>
+  );
 
   return (
     <section className={styles.container}>
@@ -92,7 +151,19 @@ const BlogPosts = (props) => {
       {handleCategories(props.categories)}
       <InfiniteScroll
         dataLength={posts.length}
-        next={fetchMorePosts}
+        next={() => {
+          const settings = {
+            category: selectedCategory,
+            numberOfPosts: posts.length,
+            commentsOn: props.commentsOn,
+            deleteCurrentPosts: false,
+            currentPosts: posts,
+            delay: true,
+            categoryChange: false,
+          };
+
+          getPosts(setPosts, setHasMore, settings);
+        }}
         hasMore={hasMore}
         loader={
           <img
