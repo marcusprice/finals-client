@@ -6,12 +6,19 @@ import moment from 'moment';
 import styles from './Post.module.css';
 import Comments from '../Comments';
 
-const displayCategories = (categories) => {
+const displayCategories = (categories, handleClickFromPost) => {
   let output = '';
 
   if (categories.length > 0) {
     const categoryTags = categories.map((category) => (
-      <li className='categoryTag'>#{category.Name}</li>
+      <li
+        onClick={() => {
+          handleClickFromPost(category);
+        }}
+        key={new Date().getTime() + category.id}
+        className='categoryTag hammer'>
+        #{category.Name}
+      </li>
     ));
 
     output = <ul>{categoryTags}</ul>;
@@ -108,7 +115,7 @@ const Post = (props) => {
   return (
     <article ref={articleRef} className={expanded ? 'expanded' : ''}>
       <h3>{props.title}</h3>
-      {displayCategories(props.categories)}
+      {displayCategories(props.categories, props.handleClickFromPost)}
       <Link href={'./posts/' + props.slug}>
         <a>
           <span className='postInfo'>

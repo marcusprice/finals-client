@@ -1,4 +1,5 @@
 import { useRef, useEffect } from 'react';
+import Link from 'next/link';
 import Head from 'next/head';
 import axios from 'axios';
 import ReactMarkdown from 'react-markdown/with-html';
@@ -14,7 +15,11 @@ const displayCategories = (categories) => {
 
   if (categories?.length > 0) {
     const categoryTags = categories.map((category) => (
-      <li className='categoryTag'>#{category.Name}</li>
+      <li className='categoryTag'>
+        <Link scroll={false} href={'/?category=' + category.Name}>
+          <a>#{category.Name}</a>
+        </Link>
+      </li>
     ));
 
     output = <ul>{categoryTags}</ul>;

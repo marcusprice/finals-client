@@ -192,6 +192,10 @@ p {
 .categoryTag {
   display: inline-block;
   margin-right: 32px;
+}
+
+.categoryTag a,
+.categoryTag {
   color: yellow;
   font-size: 18px;
 }
@@ -279,6 +283,7 @@ p {
     font-size: 30px;
   }
 
+  .categoryTag a,
   .categoryTag {
     font-size: 24px;
   }

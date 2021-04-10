@@ -1,10 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/router';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import styles from './BlogPosts.module.css';
 import Post from '../Post';
 
-const createPost = (post, commentsOn) => (
+const randomInt = () => {
+  return Math.floor(Math.random() * 1000 + 1000);
+};
+
+const createPost = (post, commentsOn, handleClickFromPost) => (
   <Post
     title={post.title}
     author={post.created_by}
@@ -15,11 +20,12 @@ const createPost = (post, commentsOn) => (
     postID={post.id}
     slug={post.slug}
     categories={post.categories}
-    key={Math.floor(Math.random() * 50000)}
+    key={new Date().getTime() + randomInt()}
+    handleClickFromPost={handleClickFromPost}
   />
 );
 
-const fetchPosts = (category, numberOfPosts, delay) => {
+const fetchPostsFromAPI = (category, numberOfPosts, delay) => {
   let uri =
     process.env.NEXT_PUBLIC_API_ROUTE +
     '/articles?published=true&_sort=created_at:DESC&_limit=5&_start=' +
@@ -40,38 +46,7 @@ const fetchPosts = (category, numberOfPosts, delay) => {
   });
 };
 
-const getPosts = async (setPosts, setHasMore, settings) => {
-  const {
-    category,
-    numberOfPosts,
-    commentsOn,
-    deleteCurrentPosts,
-    currentPosts,
-    delay,
-    categoryChange,
-  } = settings;
-
-  try {
-    const posts = await fetchPosts(category, numberOfPosts, delay);
-    if (posts.data.length > 0) {
-      const newPosts = posts.data.map((post) => createPost(post, commentsOn));
-      if (deleteCurrentPosts) {
-        setPosts(newPosts);
-      } else {
-        setPosts(currentPosts.concat(newPosts));
-      }
-    } else {
-      if (categoryChange) {
-        setPosts([]);
-      }
-      setHasMore(false);
-    }
-  } catch (error) {
-    console.error('error from getPosts:', error);
-  }
-};
-
-const determineCategoryTextClass = (text, selected) => {
+const getCategoryClass = (text, selected) => {
   // selected
   if (selected === undefined) {
     selected = '';
@@ -83,11 +58,99 @@ const determineCategoryTextClass = (text, selected) => {
 };
 
 const BlogPosts = (props) => {
+  const scrollIntoPosts = () => {
+    postsHeadingRef.current.scrollIntoView();
+  };
+
+  const handleClickFromPost = (category) => {
+    handleCategoryClick(category);
+    scrollIntoPosts();
+  };
+
+  const postsHeadingRef = useRef();
+  const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [hasMore, setHasMore] = useState(true);
   const [posts, setPosts] = useState(
-    props.posts.map((post) => createPost(post, props.commentsOn))
+    props.posts.map((post) =>
+      createPost(post, props.commentsOn, handleClickFromPost)
+    )
   );
+
+  const getPosts = async (setPosts, setHasMore, settings) => {
+    const {
+      category,
+      numberOfPosts,
+      commentsOn,
+      deleteCurrentPosts,
+      currentPosts,
+      delay,
+      categoryChange,
+    } = settings;
+
+    try {
+      const posts = await fetchPostsFromAPI(category, numberOfPosts, delay);
+      if (posts.data.length > 0) {
+        const newPosts = posts.data.map((post) =>
+          createPost(post, commentsOn, handleClickFromPost)
+        );
+        if (deleteCurrentPosts) {
+          setPosts(newPosts);
+        } else {
+          setPosts(currentPosts.concat(newPosts));
+        }
+      } else {
+        if (categoryChange) {
+          setPosts([]);
+        }
+        setHasMore(false);
+      }
+    } catch (error) {
+      console.error('error from getPosts:', error);
+    }
+  };
+
+  useEffect(() => {
+    const categoryFromQuery = router.query.category;
+    if (categoryFromQuery) {
+      props.categories.forEach((category) => {
+        if (
+          categoryFromQuery.replaceAll('%20', ' ').toLowerCase() ===
+          category.Name.toLowerCase()
+        ) {
+          scrollIntoPosts();
+          setSelectedCategory(category);
+          getPosts(setPosts, setHasMore, {
+            category,
+            numberOfPosts: 0,
+            commentsOn: props.commentsOn,
+            deleteCurrentPosts: true,
+            currentPosts: posts,
+            delay: false,
+            categoryChange: true,
+          });
+        }
+      });
+    }
+  }, []);
+
+  const handleCategoryClick = (category) => {
+    const settings = {
+      category,
+      numberOfPosts: 0,
+      commentsOn: props.commentsOn,
+      deleteCurrentPosts: true,
+      currentPosts: posts,
+      delay: false,
+      categoryChange: true,
+    };
+
+    setSelectedCategory(category);
+    getPosts(setPosts, setHasMore, settings);
+    setHasMore(true);
+
+    router.push('?category=' + category.Name, undefined, { shallow: true });
+  };
 
   const handleCategories = (categories) => (
     <ul>
@@ -108,8 +171,7 @@ const BlogPosts = (props) => {
           getPosts(setPosts, setHasMore, settings);
           setHasMore(true);
         }}>
-        <span
-          className={determineCategoryTextClass('', selectedCategory?.Name)}>
+        <span className={getCategoryClass('', selectedCategory?.Name)}>
           All
         </span>
       </li>
@@ -117,24 +179,12 @@ const BlogPosts = (props) => {
         return (
           <li
             onClick={() => {
-              const settings = {
-                category,
-                numberOfPosts: 0,
-                commentsOn: props.commentsOn,
-                deleteCurrentPosts: true,
-                currentPosts: posts,
-                delay: false,
-                categoryChange: true,
-              };
-
-              setSelectedCategory(category);
-              getPosts(setPosts, setHasMore, settings);
-              setHasMore(true);
+              handleCategoryClick(category);
             }}
             className={styles.categoryContainer + ' hammer'}
-            key={Math.floor(Math.random() * 50000)}>
+            key={new Date().getTime() + randomInt()}>
             <span
-              className={determineCategoryTextClass(
+              className={getCategoryClass(
                 category.Name,
                 selectedCategory?.Name
               )}>
@@ -148,7 +198,7 @@ const BlogPosts = (props) => {
 
   return (
     <section className={styles.container}>
-      <h2>Posts</h2>
+      <h2 ref={postsHeadingRef}>Posts</h2>
       {handleCategories(props.categories)}
       <InfiniteScroll
         dataLength={posts.length}
