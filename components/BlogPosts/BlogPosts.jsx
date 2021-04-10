@@ -120,15 +120,6 @@ const BlogPosts = (props) => {
         ) {
           scrollIntoPosts();
           setSelectedCategory(category);
-          getPosts(setPosts, setHasMore, {
-            category,
-            numberOfPosts: 0,
-            commentsOn: props.commentsOn,
-            deleteCurrentPosts: true,
-            currentPosts: posts,
-            delay: false,
-            categoryChange: true,
-          });
         }
       });
     }

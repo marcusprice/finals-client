@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import axios from 'axios';
 import Header from '../components/Header';
@@ -52,22 +53,36 @@ const Home = (props) => {
   );
 };
 
-export async function getServerSideProps() {
-  let config, articles, featuredArticleContentType, featuredArticle, categories;
+export async function getServerSideProps(context) {
+  let config,
+    articles,
+    featuredArticleContentType,
+    featuredArticle,
+    categories,
+    articlesURL =
+      process.env.API_ROUTE +
+      '/articles?published=true&_sort=created_at:DESC&_limit=5';
 
   try {
     config = await axios.get(process.env.API_ROUTE + '/config');
+    categories = await axios.get(process.env.API_ROUTE + '/categories');
 
-    articles = await axios.get(
-      process.env.API_ROUTE +
-        '/articles?published=true&_sort=created_at:DESC&_limit=5'
-    );
+    if (context.query.category) {
+      const alteredQuery = context.query.category
+        .replace(/%20/g, ' ')
+        .toLowerCase();
+
+      categories.data.forEach((category) => {
+        if (category.Name.toLowerCase() === alteredQuery) {
+          articlesURL += '&categories=' + category.id;
+        }
+      });
+    }
+    articles = await axios.get(articlesURL);
 
     featuredArticleContentType = await axios.get(
       process.env.API_ROUTE + '/featured-article'
     );
-
-    categories = await axios.get(process.env.API_ROUTE + '/categories');
 
     //handle featured article
     if (featuredArticleContentType.data.article) {
@@ -88,7 +103,7 @@ export async function getServerSideProps() {
         featuredArticle = await axios.get(process.env.API_ROUTE + '/articles');
       }
     }
-  } catch {
+  } catch (error) {
     config = [];
     articles = [];
     featuredArticleContentType = [];
@@ -100,7 +115,7 @@ export async function getServerSideProps() {
     props: {
       config: config?.data,
       posts: articles?.data,
-      featuredArticle: featuredArticle.data[0],
+      featuredArticle: featuredArticle?.data[0],
       categories: categories.data,
     },
   };
